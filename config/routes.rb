@@ -6,4 +6,6 @@ Knojoe::Application.routes.draw do
   match '/logout', to: 'sessions#destroy'
 
   root to: 'home#index'
+
+  resources :users
 end
