@@ -9,6 +9,7 @@ gem 'omniauth-facebook'
 gem 'kaminari'
 gem 'exception_notification'
 gem 'jquery-rails'
+gem 'pusher'
 
 group :development do
   gem 'awesome_print'
