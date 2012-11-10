@@ -4,8 +4,7 @@ class MessagesController < ApplicationController
     @message = @chat.messages.new(params[:message])
 
     if @message.save
-      Pusher["channel_#{@chat.id}"].trigger('chat_event', {:message => @message.content})
-      # render :text => "ok"
+      Pusher["channel_#{@chat.id}"].trigger('chat_event', { message: @message.content, author: @message.author_id, timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m") })
       render json: { html: render_to_string(partial: 'message', locals: {message: @message}) }
     else
       render :text => "ng"

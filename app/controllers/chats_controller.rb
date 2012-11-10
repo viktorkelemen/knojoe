@@ -6,9 +6,11 @@ class ChatsController < ApplicationController
 
   def villager
     @chat = Chat.find(params[:id])
+    @messages = @chat.messages
   end
 
   def guest
     @chat = Chat.find(params[:id])
+    @messages = @chat.messages
   end
 end
