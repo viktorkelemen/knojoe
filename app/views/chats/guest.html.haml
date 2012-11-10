@@ -1,3 +1,5 @@
-= simple_form_for [@chat, Message.new] do |f|
+#messages
+
+= simple_form_for [@chat, Message.new], remote: true, html: {class: 'message_form'} do |f|
   = f.input :content
   = f.button :submit
