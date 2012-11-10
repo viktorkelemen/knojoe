@@ -7,7 +7,9 @@ Knojoe::Application.routes.draw do
 
   root to: 'home#index'
 
-  resources :conversations do
+  resources :chats do
+    resources :messages, only: :create
+
     get 'guest', on: :member
     get 'villager', on: :member
   end
