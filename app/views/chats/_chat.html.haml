@@ -16,7 +16,7 @@
   var pusher = new Pusher('13ea71fd49c7de808650');
   var channel = pusher.subscribe("channel_#{@chat.id}");
   channel.bind('chat_event', function(data) {
-    $("#messages").append("<p>" + data.message + '<br/>' + data.timestamp + '</p>');
+    $("#messages").append(data.html);
     if (window.Cocoa) {
       Cocoa.log(data.message);
     }

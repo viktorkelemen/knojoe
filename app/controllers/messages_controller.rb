@@ -5,10 +5,21 @@ class MessagesController < ApplicationController
     @message.author = current_user
 
     if @message.save
-      Pusher["channel_#{@chat.id}"].trigger('chat_event', { message: @message.content, author: @message.author_id, timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m") })
-      render json: { html: render_to_string(partial: 'message', locals: {message: @message}) }
+      Pusher["channel_#{@chat.id}"].trigger('chat_event', pusher_data)
+      head :ok
     else
       render :text => "ng"
     end
+  end
+
+  private
+
+  def pusher_data
+    {
+      message:   @message.content,
+      # author:    @message.author_id,
+      # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m"),
+      html:      render_to_string(partial: 'message', locals: { message: @message })
+    }
   end
 end
