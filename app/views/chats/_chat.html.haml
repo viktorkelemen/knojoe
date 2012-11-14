@@ -1,8 +1,9 @@
+= content_for(:head) do
+  = javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
+
 #messages= render @messages
 
 = render 'message_form'
-
-= javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
 
 :javascript
   // Enable pusher logging - don't include this in production
