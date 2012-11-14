@@ -23,4 +23,7 @@ en:
     #   defaults:
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
+    placeholders:
+      chat:
+        initial_message: '例）〇〇でおすすめの中華料理屋さんはどこですか？'
 

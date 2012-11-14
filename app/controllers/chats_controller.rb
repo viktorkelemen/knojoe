@@ -1,7 +1,15 @@
 class ChatsController < ApplicationController
   def new
-    @chat = Chat.create!
-    redirect_to guest_chat_path(@chat)
+  end
+
+  def create
+    @chat = Chat.new(params[:chat])
+    @message = @chat.messages.new(content: @chat.initial_message)
+    if @chat.save
+      redirect_to guest_chat_path(@chat)
+    else
+      render :text => "ERROR"
+    end
   end
 
   def villager
