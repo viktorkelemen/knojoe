@@ -2,7 +2,9 @@
 
 FactoryGirl.define do
   factory :chat do
-    villager_id 1
-    guest_id 1
+  end
+
+  factory :message do
+    content 'a message'
   end
 end

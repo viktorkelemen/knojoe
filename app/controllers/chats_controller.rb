@@ -4,7 +4,6 @@ class ChatsController < ApplicationController
 
   def create
     @chat = Chat.new(params[:chat])
-    @message = @chat.messages.new(content: @chat.initial_message)
     if @chat.save
       redirect_to guest_chat_path(@chat)
     else
