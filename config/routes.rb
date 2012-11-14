@@ -5,7 +5,9 @@ Knojoe::Application.routes.draw do
   match '/login', to: 'sessions#new'
   match '/logout', to: 'sessions#destroy'
 
-  root to: 'home#index'
+  root to: 'villages#index'
+
+  resources :villages
 
   resources :chats do
     resources :messages, only: :create
