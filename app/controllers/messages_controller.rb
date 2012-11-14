@@ -17,9 +17,9 @@ class MessagesController < ApplicationController
   def pusher_data
     {
       message:   @message.content,
-      # author:    @message.author_id,
+      author_id:    @message.author_id,
       # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m"),
-      html:      render_to_string(partial: 'message', locals: { message: @message })
+      html:      render_to_string(partial: 'message', locals: { message: @message, check_role: false })
     }
   end
 end

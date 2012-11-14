@@ -17,7 +17,13 @@
   var pusher = new Pusher('13ea71fd49c7de808650');
   var channel = pusher.subscribe("channel_#{@chat.id}");
   channel.bind('chat_event', function(data) {
-    $("#messages").append(data.html);
+
+    if (data.author_id == #{current_user.id}) {
+      $(data.html).addClass('myview').appendTo('#messages');
+    } else {
+      $(data.html).appendTo('#messages');
+    }
+
     if (window.Cocoa) {
       Cocoa.log(data.message);
     }
