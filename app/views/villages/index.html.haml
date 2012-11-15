@@ -4,6 +4,11 @@
 %ul.villages
   = render @villages
 
+- if current_user && current_user.villages.present?
+  %h2 Joined Vilages
+  %ul.villages
+    = render current_user.villages
+
 .well
   %p Not found your village? Why not create one?!
   = render 'form'
