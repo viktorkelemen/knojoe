@@ -13,4 +13,13 @@ FactoryGirl.define do
   factory :message do
     content 'a message'
   end
+
+  factory :village do
+    name 'village'
+  end
+
+  factory :participation do
+    village
+    user
+  end
 end

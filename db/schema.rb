@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114113006) do
+ActiveRecord::Schema.define(:version => 20121115134827) do
 
   create_table "chats", :force => true do |t|
     t.integer  "villager_id"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(:version => 20121114113006) do
 
   add_index "messages", ["chat_id"], :name => "index_messages_on_chat_id"
 
+  create_table "participations", :force => true do |t|
+    t.integer  "village_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "participations", ["user_id"], :name => "index_participations_on_user_id"
+  add_index "participations", ["village_id"], :name => "index_participations_on_village_id"
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "image"
@@ -50,8 +60,9 @@ ActiveRecord::Schema.define(:version => 20121114113006) do
 
   create_table "villages", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "villagers_count", :default => 0
   end
 
 end
