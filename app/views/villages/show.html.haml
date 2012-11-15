@@ -1,5 +1,5 @@
 .page-header
-  %h2 #{@village.name} Village
+  %h2 #{@village.name} Village (#{villager_count(@village)})
 
 = link_to 'Start a new conversation', new_chat_path
 
