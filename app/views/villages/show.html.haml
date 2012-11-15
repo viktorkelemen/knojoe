@@ -2,3 +2,9 @@
   %h2 #{@village.name} Village
 
 = link_to 'Start a new conversation', new_chat_path
+
+.participation
+- if current_user && current_user.joined?(@village)
+  = button_to 'Quit this village', village_participation_path(@village), method: :delete, class: 'btn btn-danger'
+- else
+  = link_to 'Join this village', village_participations_path(@village), method: :post, class: 'btn'

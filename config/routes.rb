@@ -7,7 +7,9 @@ Knojoe::Application.routes.draw do
 
   root to: 'villages#index'
 
-  resources :villages
+  resources :villages do
+    resources :participations, only: [:create, :destroy]
+  end
 
   resources :chats do
     resources :messages, only: :create
