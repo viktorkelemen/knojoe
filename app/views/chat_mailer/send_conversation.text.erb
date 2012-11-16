@@ -1,0 +1,11 @@
+Your conversation on <%= @chat.created_at %>.
+
+Chat log
+========
+
+<% @chat.messages.each do |message| %>
+<%= message.author == @user ? 'Me: ' : 'Villager: ' %><%= message.content %>
+<% end %>
+
+Check on the web:
+<%= chat_url(@chat) %>
