@@ -14,6 +14,7 @@ gem 'pusher'
 group :development do
   gem 'awesome_print'
   gem 'quiet_assets'
+  gem 'letter_opener'
 end
 
 group :test, :development do
