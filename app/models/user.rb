@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :image
+  attr_accessible :name, :image, :email
 
   has_many :identities, dependent: :destroy
   has_many :messages, foreign_key: :author_id
@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :villages, through: :participations
 
   def self.create_with_omniauth(info)
-    create(name: info['name'], image: info['image'])
+    create(name: info['name'], image: info['image'], email: info['email'])
   end
 
   def joined?(village)
