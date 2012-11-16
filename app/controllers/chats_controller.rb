@@ -1,4 +1,7 @@
 class ChatsController < ApplicationController
+  before_filter :require_login
+  before_filter :find_chat, only: [:villager, :guest]
+
   def new
   end
 
@@ -9,17 +12,27 @@ class ChatsController < ApplicationController
     if @chat.save
       redirect_to guest_chat_path(@chat)
     else
-      render :text => "ERROR"
+      render 'new'
     end
   end
 
   def villager
-    @chat = Chat.find(params[:id])
+    if @chat.villager
+      redirect_to root_path, alert: t('chats.villager_exists')
+      return
+    end
+
+    @chat.update_attributes!(villager: current_user)
     @messages = @chat.messages
   end
 
   def guest
-    @chat = Chat.find(params[:id])
     @messages = @chat.messages
+  end
+
+  private
+
+  def find_chat
+    @chat = Chat.includes(messages: [:author]).find(params[:id])
   end
 end

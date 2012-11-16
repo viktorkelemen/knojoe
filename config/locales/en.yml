@@ -2,6 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  chats:
+    villager_exists: 'Someone already responsed to it.'
   chat_mailer:
     send_conversation:
       subject: '[Knojoe] You conversation history'
