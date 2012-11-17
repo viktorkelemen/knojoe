@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117050149) do
+ActiveRecord::Schema.define(:version => 20121117051528) do
 
   create_table "chats", :force => true do |t|
     t.integer  "villager_id"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20121117050149) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "village_id"
+    t.datetime "started_at"
+    t.datetime "finished_at"
   end
 
   create_table "identities", :force => true do |t|
