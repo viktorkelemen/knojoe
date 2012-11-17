@@ -34,6 +34,10 @@ class ChatsController < ApplicationController
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Villager joined.')
     end
 
+    if @chat.finished_at
+      render :text => "too late"
+    end
+
     @chat.update_attributes!(villager: current_user)
     @messages = @chat.messages
   end
