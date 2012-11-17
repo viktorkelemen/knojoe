@@ -11,7 +11,10 @@ Knojoe::Application.routes.draw do
     resources :participations, only: [:create, :destroy]
 
     resources :chats do
-      resources :messages, only: :create
+      resources :messages, only: :create do
+        post 'like', on: :member
+        delete 'unlike', on: :member
+      end
 
       member do
         get 'guest'

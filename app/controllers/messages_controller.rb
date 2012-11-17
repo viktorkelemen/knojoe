@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  before_filter :require_login
+
   def create
     @chat = Chat.find(params[:chat_id])
     @message = @chat.messages.new(params[:message])
@@ -12,6 +14,26 @@ class MessagesController < ApplicationController
     end
   end
 
+  def like
+    @message = Message.find(params[:id])
+    @like = Like.new(message: @message, user: current_user)
+    if @like.save
+      render json: { message_id: @message.id }
+    else
+      render json: { error: @like.errors.full_message }
+    end
+  end
+
+  def unlike
+    @message = Message.find(params[:id])
+    @like = @message.like
+
+    if @like.destroy
+      render json: { message_id: @message.id }
+    else
+      render json: { error: @like.errors.full_message }
+    end
+  end
   private
 
   def pusher_data

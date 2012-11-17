@@ -2,7 +2,7 @@
   %h1 Review your conversation
 
 %h3 Conversation
-#messages= render @messages
+#messages.review_mode= render @messages, mode: 'review'
 
 %h3 Email me the chat log
 = form_tag email_chat_path(@chat) do

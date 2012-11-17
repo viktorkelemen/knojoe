@@ -1,7 +1,15 @@
 - unless local_assigns.has_key? :check_role
   - check_role = true
 
-%p{class: ('me_msg' if check_role && current_user == message.author)}
-  = message.content
-  %br
-  = message.created_at.strftime("%Y/%m/%d %H:%m")
+- unless local_assigns.has_key? :mode
+  - mode = nil
+
+.message{class: ('liked' if message.liked?), id: dom_id(message)}
+  %p{class: ('me_msg' if check_role && current_user == message.author)}
+    = message.content
+    %br
+    = message.created_at.strftime("%Y/%m/%d %H:%m")
+    - if mode == 'review'
+      %br
+      = link_to 'Like', like_message_path(message), class: 'like_button like_status_css', method: :post, remote: true
+      = link_to 'Unlike', unlike_message_path(message), class: 'unlike_button', method: :delete, remote: true

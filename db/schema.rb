@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117051528) do
+ActiveRecord::Schema.define(:version => 20121117080424) do
 
   create_table "chats", :force => true do |t|
     t.integer  "villager_id"
@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(:version => 20121117051528) do
   end
 
   add_index "identities", ["user_id"], :name => "index_identities_on_user_id"
+
+  create_table "likes", :force => true do |t|
+    t.integer  "message_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "likes", ["message_id"], :name => "index_likes_on_message_id"
+  add_index "likes", ["user_id"], :name => "index_likes_on_user_id"
 
   create_table "messages", :force => true do |t|
     t.integer  "chat_id"
