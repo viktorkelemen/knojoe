@@ -1,9 +1,11 @@
 = content_for(:head) do
   = javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
 
-#messages= render @messages
+.row
+  .span6.offset3
+    #messages= render @messages
 
-= render 'message_form'
+    = render 'message_form'
 
 :javascript
   // Enable pusher logging - don't include this in production
@@ -19,7 +21,7 @@
   channel.bind('chat_event', function(data) {
 
     if (data.author_id == #{current_user.id}) {
-      $(data.html).addClass('myview').appendTo('#messages');
+      $(data.html).addClass('me_msg').appendTo('#messages');
     } else {
       $(data.html).appendTo('#messages');
     }

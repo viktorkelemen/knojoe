@@ -7,3 +7,7 @@ en:
   chat_mailer:
     send_conversation:
       subject: '[Knojoe] You conversation history'
+  helpers:
+    submit:
+      message:
+        create: Send
