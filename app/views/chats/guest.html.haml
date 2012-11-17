@@ -1,8 +1,8 @@
 = render 'chat'
 
 :javascript
-  TIME_LIMIT = 30 * 1000;
-  setTimeout(function(){
+  var TIME_LIMIT = 30 * 1000;
+  var timer = setTimeout(function(){
     timeup();
   }, TIME_LIMIT);
 
@@ -31,6 +31,7 @@
 
   channel.bind('chat_status_event', function(data) {
     $('<p>' + data + '</p>').addClass('status_msg').appendTo('#messages');
+    clearTimeout(timer);
   });
 
   function timeup() {
