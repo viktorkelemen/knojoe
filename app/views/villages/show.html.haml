@@ -1,7 +1,7 @@
 .page-header
   %h2 #{@village.name} Village (#{villager_count(@village)})
 
-= link_to 'Start a new conversation', new_chat_path
+= link_to 'Start a new conversation', new_village_chat_path(@village)
 
 .participation
 - if current_user && current_user.joined?(@village)

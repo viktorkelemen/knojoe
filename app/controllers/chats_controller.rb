@@ -3,10 +3,12 @@ class ChatsController < ApplicationController
   before_filter :find_chat, only: [:villager, :guest]
 
   def new
+    @village = Village.find(params[:village_id])
   end
 
   def create
-    @chat = Chat.new(params[:chat])
+    @village = Village.find(params[:village_id])
+    @chat = @village.chats.new(params[:chat])
     @chat.guest = current_user
 
     if @chat.save

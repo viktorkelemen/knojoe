@@ -3,6 +3,7 @@
 
 .row
   .span6.offset3
+    %h2 #{@chat.village.name} Village
     #messages= render @messages
 
     = render 'message_form'

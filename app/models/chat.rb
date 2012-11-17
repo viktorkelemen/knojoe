@@ -4,6 +4,7 @@ class Chat < ActiveRecord::Base
 
   belongs_to :guest, foreign_key: :guest_id, class_name: 'User'
   belongs_to :villager, foreign_key: :villager_id, class_name: 'User'
+  belongs_to :village
   has_many :messages
 
   validates :guest, presence: true
