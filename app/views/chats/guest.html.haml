@@ -44,21 +44,29 @@
     }
   });
 
+  // Handling status events coming with pusher
   channel.bind('chat_status_event', function(data) {
-    // when villager joins
-    insertStatusMessage(data);
+    addStatusMessage(data);
+
+    // FIX: this should not be here
+    // It is to detect when the villager joined the discussion
     if (connectionTimer !== undefined) {
       clearTimeout(connectionTimer);
       connectionTimer = undefined;
     };
   });
 
+  function addStatusMessage(message) {
+    $('<p/>').html(message).addClass('status_msg').appendTo('#messages');
+  }
+
+
   function sendConnectionTimeup() {
     $.ajax({
       url: "#{connection_timeout_chat_path(@chat)}",
       type: "post",
       success: function() {
-        $('<p>No one picked up.</p>').addClass('status_msg').appendTo('#messages');
+        addStatusMessage('No one picked up')
       },
       error: function(error) {
         console.error(error);
@@ -70,18 +78,12 @@
     $.ajax({
       url: "#{chat_timeout_chat_path(@chat)}",
       type: "post",
-      success: function() {
-        // $('<p>No one picked up.</p>').addClass('status_msg').appendTo('#messages');
-      },
+      success: function() { },
       error: function(error) {
         console.error(error);
       }
     });
   };
-
-  function insertStatusMessage(message) {
-    $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
-  }
 
   $('.finish_button').click(function(e) {
     e.preventDefault();
