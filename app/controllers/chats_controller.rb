@@ -46,9 +46,10 @@ class ChatsController < ApplicationController
 
   def pusher_data
     {
-      hi: 'hi'
-      # message:   @message.content,
-      # author_id:    @message.author_id,
+      village_name: @village.name,
+      chat_path:    villager_chat_path(@chat),
+      message:      @chat.messages.first.content,
+      timestamp:    @chat.created_at.strftime("%H:%m")
       # # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m"),
       # html:      render_to_string(partial: 'message', locals: { message: @message, check_role: false })
     }

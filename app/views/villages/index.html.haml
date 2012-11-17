@@ -30,6 +30,9 @@
     var channel = pusher.subscribe("channel_#{current_user.id}");
     channel.bind('chat_start_event', function(data) {
       console.log('creator coming', data);
+      if (confirm(data.village_name + '\n' + data.message + '\n' + data.timestamp)) {
+        window.location = data.chat_path;
+      }
       if (window.Cocoa) {
         Cocoa.log(data);
       }
