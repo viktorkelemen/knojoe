@@ -1,6 +1,7 @@
 .row
   .span6.offset3
     = render 'chat'
+    = link_to 'Exit', '#', id: 'exit_chat', class: 'btn btn-danger'
 
 :javascript
   // Enable pusher logging - don't include this in production
@@ -33,3 +34,20 @@
   function insertStatusMessage(message) {
     $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
   }
+
+  jQuery(function($) {
+    $("#exit_chat").on('click', function(e){
+      e.preventDefault();
+      $.ajax({
+        url: "#{finish_chat_path(@chat)}",
+        type: "post",
+        data: { message: 'Villager exited..' },
+        success: function() {
+          window.location = "/";
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
+    });
+  });
