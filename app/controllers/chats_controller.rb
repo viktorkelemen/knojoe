@@ -13,7 +13,7 @@ class ChatsController < ApplicationController
 
     if @chat.save
       @village.villagers.each do |village|
-        Pusher["channel_#{village.id}"].trigger('chat_start_event', pusher_data)
+        Pusher["channel_villager_#{village.id}"].trigger('chat_start_event', pusher_data)
       end
 
       redirect_to guest_chat_path(@chat)
@@ -26,6 +26,12 @@ class ChatsController < ApplicationController
     if @chat.villager && current_user != @chat.villager
       redirect_to root_path, alert: t('chats.villager_exists')
       return
+    end
+
+    # if villager joined
+    unless @chat.started_at
+      @chat.update_attributes!(started_at: Time.now)
+      Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Villager joined.')
     end
 
     @chat.update_attributes!(villager: current_user)

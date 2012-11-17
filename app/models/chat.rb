@@ -1,5 +1,5 @@
 class Chat < ActiveRecord::Base
-  attr_accessible :guest, :villager, :initial_message
+  attr_accessible :guest, :villager, :initial_message, :started_at, :finished_at
   attr_accessor :initial_message
 
   belongs_to :guest, foreign_key: :guest_id, class_name: 'User'

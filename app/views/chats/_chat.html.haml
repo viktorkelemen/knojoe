@@ -7,27 +7,3 @@
     #messages= render @messages
 
     = render 'message_form'
-
-:javascript
-  // Enable pusher logging - don't include this in production
-  Pusher.log = function(message) {
-    if (window.console && window.console.log) window.console.log(message);
-  };
-
-  // Flash fallback logging - don't include this in production
-  WEB_SOCKET_DEBUG = true;
-
-  var pusher = new Pusher('13ea71fd49c7de808650');
-  var channel = pusher.subscribe("channel_#{@chat.id}");
-  channel.bind('chat_event', function(data) {
-
-    if (data.author_id == #{current_user.id}) {
-      $(data.html).addClass('me_msg').appendTo('#messages');
-    } else {
-      $(data.html).appendTo('#messages');
-    }
-
-    if (window.Cocoa) {
-      Cocoa.log(data.message);
-    }
-  });

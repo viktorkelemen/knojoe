@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
     @message.author = current_user
 
     if @message.save
-      Pusher["channel_#{@chat.id}"].trigger('chat_event', pusher_data)
+      Pusher["channel_chat_#{@chat.id}"].trigger('chat_event', pusher_data)
       head :ok
     else
       render :text => "ng"
