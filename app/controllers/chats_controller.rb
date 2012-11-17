@@ -17,7 +17,7 @@ class ChatsController < ApplicationController
   end
 
   def villager
-    if @chat.villager
+    if @chat.villager && current_user != @chat.villager
       redirect_to root_path, alert: t('chats.villager_exists')
       return
     end
