@@ -57,8 +57,6 @@ class ChatsController < ApplicationController
     @chat = Chat.includes(messages: [:author]).find(params[:id])
   end
 
-  private
-
   def pusher_data
     {
       village_name: @village.name,
