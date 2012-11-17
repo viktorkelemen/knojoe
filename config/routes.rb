@@ -8,7 +8,10 @@ Knojoe::Application.routes.draw do
   root to: 'villages#index'
 
   resources :villages, shallow: true do
-    resources :participations, only: [:create, :destroy]
+    member do
+      post 'join'
+      delete 'quit'
+    end
 
     resources :chats do
       resources :messages, only: :create do
