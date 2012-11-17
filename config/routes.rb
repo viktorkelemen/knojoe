@@ -16,7 +16,8 @@ Knojoe::Application.routes.draw do
       member do
         get 'guest'
         get 'villager'
-        post 'timeout'
+        post 'connection_timeout'
+        post 'chat_timeout'
       end
     end
   end

@@ -1,10 +1,21 @@
 = render 'chat'
 
 :javascript
-  var TIME_LIMIT = 3 * 1000;
-  var timer = setTimeout(function(){
-    timeup();
-  }, TIME_LIMIT);
+  var CONNECTION_TIMEOUT_LIMIT = 30 * 1000;
+  var connectionTimer = setTimeout(function(){
+    sendConnectionTimeup();
+  }, CONNECTION_TIMEOUT_LIMIT);
+
+  var CHAT_TIMEOUT_LIMIT = 3 * 60 * 1000;
+  var CHAT_TIMEOUT_WARNING = 10 * 1000;
+  var chatTimer = setTimeout(function(){
+
+    setInterval( function () {
+      sendChatTimeup();
+    }, CHAT_TIMEOUT_WARNING);
+
+  }, CHAT_TIMEOUT_LIMIT);
+
 
   // Enable pusher logging - don't include this in production
   Pusher.log = function(message) {
@@ -30,13 +41,17 @@
   });
 
   channel.bind('chat_status_event', function(data) {
-    $('<p>' + data + '</p>').addClass('status_msg').appendTo('#messages');
-    clearTimeout(timer);
+    // when villager joins
+    insertStatusMessage(data);
+    if (connectionTimer !== undefined) {
+      clearTimeout(connectionTimer);
+      connectionTimer = undefined;
+    };
   });
 
-  function timeup() {
+  function sendConnectionTimeup() {
     $.ajax({
-      url: "#{timeout_chat_path(@chat)}",
+      url: "#{connection_timeout_chat_path(@chat)}",
       type: "post",
       success: function() {
         $('<p>No one picked up.</p>').addClass('status_msg').appendTo('#messages');
@@ -46,6 +61,25 @@
       }
     });
   };
+
+  function sendChatTimeup() {
+    $.ajax({
+      url: "#{chat_timeout_chat_path(@chat)}",
+      type: "post",
+      success: function() {
+        // $('<p>No one picked up.</p>').addClass('status_msg').appendTo('#messages');
+      },
+      error: function(error) {
+        console.error(error);
+      }
+    });
+  };
+
+  function insertStatusMessage(message) {
+    $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
+  }
+
+
 
 
 

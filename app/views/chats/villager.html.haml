@@ -24,3 +24,10 @@
     }
   });
 
+  channel.bind('chat_status_event', function(data) {
+    insertStatusMessage(data);
+  });
+
+  function insertStatusMessage(message) {
+    $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
+  }
