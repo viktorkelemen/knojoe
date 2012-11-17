@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   before_filter :require_login
-  before_filter :find_chat, only: [:villager, :guest]
+  before_filter :find_chat, only: [:villager, :guest, :timeout]
 
   def new
     @village = Village.find(params[:village_id])
@@ -40,6 +40,11 @@ class ChatsController < ApplicationController
 
   def guest
     @messages = @chat.messages
+  end
+
+  def timeout
+    @chat.update_attributes!(finished_at: Time.now)
+    head :ok
   end
 
   private

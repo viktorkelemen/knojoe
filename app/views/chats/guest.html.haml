@@ -1,6 +1,11 @@
 = render 'chat'
 
 :javascript
+  TIME_LIMIT = 30 * 1000;
+  setTimeout(function(){
+    timeup();
+  }, TIME_LIMIT);
+
   // Enable pusher logging - don't include this in production
   Pusher.log = function(message) {
     if (window.console && window.console.log) window.console.log(message);
@@ -27,6 +32,19 @@
   channel.bind('chat_status_event', function(data) {
     $('<p>' + data + '</p>').addClass('status_msg').appendTo('#messages');
   });
+
+  function timeup() {
+    $.ajax({
+      url: "#{timeout_chat_path(@chat)}",
+      type: "post",
+      success: function() {
+        $('<p>No one picked up.</p>').addClass('status_msg').appendTo('#messages');
+      },
+      error: function(error) {
+        console.error(error);
+      }
+    });
+  };
 
 
 

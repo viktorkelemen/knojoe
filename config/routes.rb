@@ -13,8 +13,11 @@ Knojoe::Application.routes.draw do
     resources :chats do
       resources :messages, only: :create
 
-      get 'guest', on: :member
-      get 'villager', on: :member
+      member do
+        get 'guest'
+        get 'villager'
+        post 'timeout'
+      end
     end
   end
 
