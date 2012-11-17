@@ -1,5 +1,5 @@
 class VillagesController < ApplicationController
-  before_filter :require_login, only: [:join, :quit]
+  before_filter :require_login, only: [:create, :join, :quit]
   before_filter :find_village, only: [:join, :quit]
 
   def index
@@ -13,6 +13,7 @@ class VillagesController < ApplicationController
   def create
     @village = Village.new(params[:village])
     if @village.save
+      current_user.villages << @village
       redirect_to @village, notice: 'Successfully created.'
     else
       # TODO
@@ -21,7 +22,7 @@ class VillagesController < ApplicationController
   end
 
   def join
-    @village.villagers << current_user
+    current_user.villages << @village
     redirect_to @village, notice: "You just joined this village!"
   end
 

@@ -22,7 +22,7 @@ describe Village do
       expect { village.villagers << user }.
         to change { village.villagers_count }.from(0).to(1)
 
-      expect { village.villagers.clear }.
+      expect { village.villagers.delete(user) }.
         to change { village.villagers_count }.from(1).to(0)
     end
   end

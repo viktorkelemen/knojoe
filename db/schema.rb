@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117080424) do
+ActiveRecord::Schema.define(:version => 20121117122844) do
 
   create_table "chats", :force => true do |t|
     t.integer  "villager_id"
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(:version => 20121117080424) do
     t.string   "name"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
-    t.integer  "villager_counts", :default => 0
     t.integer  "villagers_count", :default => 0
   end
 
