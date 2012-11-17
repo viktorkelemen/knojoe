@@ -1,3 +1,6 @@
+= content_for(:head) do
+  = javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
+
 .page-header
   %h1 Villages
 
@@ -12,3 +15,22 @@
 .well
   %p Not found your village? Why not create one?!
   = render 'form'
+
+- if current_user.try(:villager?)
+  :javascript
+    // Enable pusher logging - don't include this in production
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) window.console.log(message);
+    };
+
+    // Flash fallback logging - don't include this in production
+    WEB_SOCKET_DEBUG = true;
+
+    var pusher = new Pusher('13ea71fd49c7de808650');
+    var channel = pusher.subscribe("channel_#{current_user.id}");
+    channel.bind('chat_start_event', function(data) {
+      console.log('creator coming', data);
+      if (window.Cocoa) {
+        Cocoa.log(data);
+      }
+    });

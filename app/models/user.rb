@@ -14,4 +14,8 @@ class User < ActiveRecord::Base
   def joined?(village)
     villages.include?(village)
   end
+
+  def villager?
+    villages.present?
+  end
 end
