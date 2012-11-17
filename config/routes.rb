@@ -20,6 +20,7 @@ Knojoe::Application.routes.draw do
         post 'connection_timeout'
         post 'chat_timeout'
         post 'finish'
+        post 'email'
       end
     end
   end

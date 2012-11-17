@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   before_filter :require_login
-  before_filter :find_chat, only: [:villager, :guest, :timeout, :chat_timeout, :finish, :review]
+  before_filter :find_chat, except: [:new, :create]
 
   def new
     @village = Village.find(params[:village_id])
@@ -64,7 +64,13 @@ class ChatsController < ApplicationController
   end
 
   def review
-    render :text => "review mode"
+    raise 'error' unless @chat.finished_at
+    @messages = @chat.messages
+  end
+
+  def email
+    ChatMailer.send_conversation(@chat, current_user, params[:email]).deliver
+    redirect_to review_chat_path(@chat), notice: 'Sent!'
   end
 
   private
