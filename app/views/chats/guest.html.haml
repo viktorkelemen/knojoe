@@ -1,4 +1,8 @@
-= render 'chat'
+.row
+  .span6.offset3
+    = render 'chat'
+
+    = link_to 'Thank you and exit', '#', class: 'btn btn-danger finish_button'
 
 :javascript
   var CONNECTION_TIMEOUT_LIMIT = 30 * 1000;
@@ -79,7 +83,20 @@
     $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
   }
 
+  $('.finish_button').click(function(e) {
+    e.preventDefault();
 
-
-
-
+    var thankyouMessage = prompt('Please say thank you to the villager');
+    // after guest enter the 'thank you' message
+    $.ajax({
+      url: "#{finish_chat_path(@chat)}",
+      type: "post",
+      data: { message: thankyouMessage },
+      success: function() {
+        window.location = "#{review_chat_path(@chat)}";
+      },
+      error: function(error) {
+        console.error(error);
+      }
+    });
+  });

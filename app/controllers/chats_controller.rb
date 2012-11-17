@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   before_filter :require_login
-  before_filter :find_chat, only: [:villager, :guest, :timeout, :chat_timeout]
+  before_filter :find_chat, only: [:villager, :guest, :timeout, :chat_timeout, :finish, :review]
 
   def new
     @village = Village.find(params[:village_id])
@@ -53,13 +53,18 @@ class ChatsController < ApplicationController
   end
 
   def chat_timeout
-    # after guest send the request, and no villager respond in time
-    # unless @chat.finished_at
-    #   @chat.update_attributes!(finished_at: Time.now)
-    # end
-
     Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Time is up, Guest please press the thank you button and exit.')
     head :ok
+  end
+
+  def finish
+    @chat.update_attributes!(finished_at: Time.now)
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', params[:message])
+    head :ok
+  end
+
+  def review
+    render :text => "review mode"
   end
 
   private
