@@ -1,0 +1,6 @@
+.page-header
+  %h2 My chats
+
+%ul
+  - @chats.each do |chat|
+    = link_to chat_path(chat), '#'
