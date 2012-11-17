@@ -15,3 +15,24 @@
   height: 220px;
   -webkit-box-sizing: border-box;
 }
+
+
+.message {
+
+  .like_button {
+    display: block;
+  }
+
+  .unlike_button {
+    display: none;
+  }
+
+  &.liked {
+    .like_button {
+      display: none;
+    }
+    .unlike_button {
+      display: block;
+    }
+  }
+}
