@@ -32,6 +32,18 @@ class ChatsController < ApplicationController
     unless @chat.started_at
       @chat.update_attributes!(started_at: Time.now)
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Villager joined.')
+
+      # sending all other villagers that someone picked it up
+      village = @chat.village
+      village.villagers.each do |villager|
+        unless villager == current_user
+          Pusher["channel_villager_#{villager.id}"].trigger('chat_start_event', {
+            message: @chat.messages.first.content,
+            type: 'pickedup'
+          })
+        end
+      end
+
     end
 
     if @chat.finished_at
@@ -85,7 +97,8 @@ class ChatsController < ApplicationController
       village_name: @village.name,
       chat_path:    villager_chat_path(@chat),
       message:      @chat.messages.first.content,
-      timestamp:    @chat.created_at.strftime("%H:%m")
+      timestamp:    @chat.created_at.strftime("%H:%m"),
+      type:         'new'
       # # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m"),
       # html:      render_to_string(partial: 'message', locals: { message: @message, check_role: false })
     }

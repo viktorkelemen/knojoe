@@ -1,0 +1,38 @@
+.villager_dashboard
+  %h2 Villager Dashboard
+  .msgboard
+
+:javascript
+
+  function addMsg(data) {
+
+    var entry;
+
+    if (data) {
+      entry = $('<div>').addClass('msg');
+
+      $('<p>').text(data.message).appendTo(entry);
+      switch (data.type) {
+        case 'new':
+          $('<a>').attr('href', data.chat_path).addClass('btn').text('Pick up').appendTo(entry);
+          break;
+      }
+
+      $('.villager_dashboard .msgboard').prepend(entry);
+    }
+  }
+
+  (function () {
+
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) window.console.log(message);
+    };
+
+    // Flash fallback logging - don't include this in production
+    WEB_SOCKET_DEBUG = true;
+
+    var pusher = new Pusher('13ea71fd49c7de808650');
+    var channel = pusher.subscribe("channel_villager_#{current_user.id}");
+    channel.bind('chat_start_event', addMsg);
+
+  }());

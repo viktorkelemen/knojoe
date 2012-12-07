@@ -4,6 +4,9 @@
 .page-header
   %h1 Villages
 
+- if current_user.try(:villager?)
+  = render 'villager_dashboard'
+
 %ul.villages
   = render @villages
 
@@ -15,25 +18,3 @@
 .well
   %p Not found your village? Why not create one?!
   = render 'form'
-
-- if current_user.try(:villager?)
-  :javascript
-    // Enable pusher logging - don't include this in production
-    Pusher.log = function(message) {
-      if (window.console && window.console.log) window.console.log(message);
-    };
-
-    // Flash fallback logging - don't include this in production
-    WEB_SOCKET_DEBUG = true;
-
-    var pusher = new Pusher('13ea71fd49c7de808650');
-    var channel = pusher.subscribe("channel_villager_#{current_user.id}");
-    channel.bind('chat_start_event', function(data) {
-      console.log('creator coming', data);
-      if (confirm(data.village_name + '\n' + data.message + '\n' + data.timestamp)) {
-        window.location = data.chat_path;
-      }
-      if (window.Cocoa) {
-        Cocoa.log(data);
-      }
-    });
