@@ -12,8 +12,8 @@ class ChatsController < ApplicationController
     @chat.guest = current_user
 
     if @chat.save
-      @village.villagers.each do |village|
-        Pusher["channel_villager_#{village.id}"].trigger('chat_start_event', pusher_data)
+      @village.villagers.each do |villager|
+        Pusher["channel_villager_#{villager.id}"].trigger('chat_start_event', pusher_data)
       end
 
       redirect_to guest_chat_path(@chat)
