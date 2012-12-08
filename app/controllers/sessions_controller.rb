@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   def new
+    cookies[:desktop] = params[:desktop]
+    redirect_to '/auth/facebook'
   end
 
   def create
@@ -51,6 +53,7 @@ class SessionsController < ApplicationController
   private
 
   def return_path
-    session.delete(:return_to) || root_url
+    path = 'knojoe://xxx' if cookies[:desktop]
+    path || session.delete(:return_to) || root_url
   end
 end
