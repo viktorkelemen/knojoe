@@ -33,14 +33,12 @@ class ChatsController < ApplicationController
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'responder joined.')
 
       # sending all other responders that someone picked it up
-      User.all.each do |user|
-        unless user == current_user
-          Pusher["channel_user_#{user.id}"].trigger('chat_start_event', {
-            message: @chat.messages.first.content,
-            type: 'pickedup'
-          })
-        end
-      end
+      Pusher["presence-home"].trigger('chat_pickedup_event', {
+        chat_id: @chat.id,
+        message: "##{@chat.id} - picked up",
+        timestamp: Time.now.strftime("%H:%m"),
+        type: 'pickedup'
+      })
 
     end
 
@@ -92,8 +90,9 @@ class ChatsController < ApplicationController
 
   def pusher_data
     {
+      chat_id:      @chat.id,
       chat_path:    responder_chat_path(@chat),
-      message:      @chat.messages.first.content,
+      message:      "##{@chat.id} - #{@chat.messages.first.content}",
       timestamp:    @chat.created_at.strftime("%H:%m"),
       type:         'new'
       # # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m"),
