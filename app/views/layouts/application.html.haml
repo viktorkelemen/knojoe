@@ -24,6 +24,8 @@
             %span.icon-bar
           %a.brand(href="/") Knojoe
           .container.nav-collapse
+            %ul.nav
+              %li= link_to "Ranking", users_path
             %ul.nav.pull-right
               - if signed_in?
                 %li.dropdown
