@@ -76,7 +76,7 @@ class ChatsController < ApplicationController
 
   def review
     raise 'error' unless @chat.finished_at
-    raise 'error' unless @chat.requester == current_user
+    raise 'error' unless @chat.requester == current_user || @chat.responder == current_user
     @messages = @chat.messages
   end
 
