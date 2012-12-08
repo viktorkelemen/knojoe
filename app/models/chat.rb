@@ -1,18 +1,18 @@
 class Chat < ActiveRecord::Base
-  attr_accessible :guest, :villager, :initial_message, :started_at, :finished_at
+  attr_accessible :requester, :responder, :initial_message, :started_at, :finished_at
   attr_accessor :initial_message
 
-  belongs_to :guest, foreign_key: :guest_id, class_name: 'User'
-  belongs_to :villager, foreign_key: :villager_id, class_name: 'User'
+  belongs_to :requester, foreign_key: :requester_id, class_name: 'User'
+  belongs_to :responder, foreign_key: :responder_id, class_name: 'User'
   has_many :messages
 
-  validates :guest, presence: true
+  validates :requester, presence: true
 
   before_create :create_initial_message, if: 'initial_message'
 
   private
 
   def create_initial_message
-    messages.new(content: initial_message, author: guest)
+    messages.new(content: initial_message, author: requester)
   end
 end

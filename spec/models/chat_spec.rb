@@ -29,18 +29,18 @@ describe Chat do
   describe 'assosications' do
     let(:user) { create(:user) }
 
-    describe 'guest' do
-      let(:chat) { build(:chat, guest_id: user.id) }
+    describe 'requester' do
+      let(:chat) { build(:chat, requester_id: user.id) }
 
-      subject { chat.guest }
+      subject { chat.requester }
 
       it { should == user }
     end
 
-    describe 'villager' do
-      let(:chat) { build(:chat, villager_id: user.id) }
+    describe 'responder' do
+      let(:chat) { build(:chat, responder_id: user.id) }
 
-      subject { chat.villager }
+      subject { chat.responder }
 
       it { should == user }
     end

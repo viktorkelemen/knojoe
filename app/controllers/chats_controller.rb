@@ -7,31 +7,31 @@ class ChatsController < ApplicationController
 
   def create
     @chat = Chat.new(params[:chat])
-    @chat.guest = current_user
+    @chat.requester = current_user
 
     if @chat.save
       User.all.each do |user|
         Pusher["channel_user_#{user.id}"].trigger('chat_start_event', pusher_data)
       end
 
-      redirect_to guest_chat_path(@chat)
+      redirect_to requester_chat_path(@chat)
     else
       render 'new'
     end
   end
 
-  def villager
-    if @chat.villager && current_user != @chat.villager
-      redirect_to root_path, alert: t('chats.villager_exists')
+  def responder
+    if @chat.responder && current_user != @chat.responder
+      redirect_to root_path, alert: t('chats.responder_exists')
       return
     end
 
-    # if villager joined
+    # if responder joined
     unless @chat.started_at
       @chat.update_attributes!(started_at: Time.now)
-      Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Villager joined.')
+      Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'responder joined.')
 
-      # sending all other villagers that someone picked it up
+      # sending all other responders that someone picked it up
       User.all.each do |user|
         unless user == current_user
           Pusher["channel_user_#{user.id}"].trigger('chat_start_event', {
@@ -47,22 +47,22 @@ class ChatsController < ApplicationController
       render :text => "too late"
     end
 
-    @chat.update_attributes!(villager: current_user)
+    @chat.update_attributes!(responder: current_user)
     @messages = @chat.messages
   end
 
-  def guest
+  def requester
     @messages = @chat.messages
   end
 
   def connection_timeout
-    # after guest send the request, and no villager respond in time
+    # after requester send the request, and no responder respond in time
     @chat.update_attributes!(finished_at: Time.now)
     head :ok
   end
 
   def chat_timeout
-    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Time is up, Guest please press the thank you button and exit.')
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Time is up, requester please press the thank you button and exit.')
     head :ok
   end
 
@@ -74,7 +74,7 @@ class ChatsController < ApplicationController
 
   def review
     raise 'error' unless @chat.finished_at
-    raise 'error' unless @chat.guest == current_user
+    raise 'error' unless @chat.requester == current_user
     @messages = @chat.messages
   end
 
@@ -91,7 +91,7 @@ class ChatsController < ApplicationController
 
   def pusher_data
     {
-      chat_path:    villager_chat_path(@chat),
+      chat_path:    responder_chat_path(@chat),
       message:      @chat.messages.first.content,
       timestamp:    @chat.created_at.strftime("%H:%m"),
       type:         'new'
