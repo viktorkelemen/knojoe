@@ -5,7 +5,7 @@ Knojoe::Application.routes.draw do
   match '/login', to: 'sessions#new'
   match '/logout', to: 'sessions#destroy'
 
-  root to: 'villages#index'
+  root to: 'home#index'
 
   resources :villages, shallow: true do
     member do
