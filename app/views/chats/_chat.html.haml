@@ -1,7 +1,7 @@
 = content_for(:head) do
   = javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
 
-%h2 #{@chat.village.name} Village
+%h2 Chat
 #messages= render @messages
 
 = render 'message_form'

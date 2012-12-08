@@ -7,27 +7,20 @@ Knojoe::Application.routes.draw do
 
   root to: 'home#index'
 
-  resources :villages, shallow: true do
-    member do
-      post 'join'
-      delete 'quit'
+  resources :chats, shallow: true do
+    resources :messages, only: :create do
+      post 'like', on: :member
+      delete 'unlike', on: :member
     end
 
-    resources :chats do
-      resources :messages, only: :create do
-        post 'like', on: :member
-        delete 'unlike', on: :member
-      end
-
-      member do
-        get 'guest'
-        get 'villager'
-        get 'review'
-        post 'connection_timeout'
-        post 'chat_timeout'
-        post 'finish'
-        post 'email'
-      end
+    member do
+      get 'guest'
+      get 'villager'
+      get 'review'
+      post 'connection_timeout'
+      post 'chat_timeout'
+      post 'finish'
+      post 'email'
     end
   end
 

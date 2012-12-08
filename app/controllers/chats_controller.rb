@@ -3,17 +3,15 @@ class ChatsController < ApplicationController
   before_filter :find_chat, except: [:new, :create]
 
   def new
-    @village = Village.find(params[:village_id])
   end
 
   def create
-    @village = Village.find(params[:village_id])
-    @chat = @village.chats.new(params[:chat])
+    @chat = Chat.new(params[:chat])
     @chat.guest = current_user
 
     if @chat.save
-      @village.villagers.each do |villager|
-        Pusher["channel_villager_#{villager.id}"].trigger('chat_start_event', pusher_data)
+      User.all.each do |user|
+        Pusher["channel_user_#{user.id}"].trigger('chat_start_event', pusher_data)
       end
 
       redirect_to guest_chat_path(@chat)
@@ -34,10 +32,9 @@ class ChatsController < ApplicationController
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Villager joined.')
 
       # sending all other villagers that someone picked it up
-      village = @chat.village
-      village.villagers.each do |villager|
-        unless villager == current_user
-          Pusher["channel_villager_#{villager.id}"].trigger('chat_start_event', {
+      User.all.each do |user|
+        unless user == current_user
+          Pusher["channel_user_#{user.id}"].trigger('chat_start_event', {
             message: @chat.messages.first.content,
             type: 'pickedup'
           })
@@ -94,7 +91,6 @@ class ChatsController < ApplicationController
 
   def pusher_data
     {
-      village_name: @village.name,
       chat_path:    villager_chat_path(@chat),
       message:      @chat.messages.first.content,
       timestamp:    @chat.created_at.strftime("%H:%m"),
