@@ -7,6 +7,9 @@ Knojoe::Application.routes.draw do
 
   root to: 'home#index'
 
+  get 'home/hook'
+  post 'pusher/auth'
+
   resources :chats, shallow: true do
     resources :messages, only: :create do
       post 'like', on: :member

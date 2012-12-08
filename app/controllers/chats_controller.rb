@@ -10,9 +10,10 @@ class ChatsController < ApplicationController
     @chat.requester = current_user
 
     if @chat.save
-      User.all.each do |user|
-        Pusher["channel_user_#{user.id}"].trigger('chat_start_event', pusher_data)
-      end
+      # User.all.each do |user|
+      #   Pusher["channel_user_#{user.id}"].trigger('chat_start_event', pusher_data)
+      # end
+      Pusher["presence-home"].trigger('chat_start_event', pusher_data)
 
       redirect_to requester_chat_path(@chat)
     else
