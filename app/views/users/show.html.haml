@@ -1,6 +1,5 @@
 .page-header
-  %h2 My chats
+  %h2 #{@user.name}
 
-%ul
-  - @chats.each do |chat|
-    = link_to chat_path(chat), '#'
+%h2 Received Likes Count
+= @user.received_likes_count

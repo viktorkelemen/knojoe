@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121208082141) do
+ActiveRecord::Schema.define(:version => 20121208084332) do
 
   create_table "chats", :force => true do |t|
     t.integer  "responder_id"
@@ -68,9 +68,10 @@ ActiveRecord::Schema.define(:version => 20121208082141) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "image"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "email"
+    t.integer  "received_likes_count", :default => 0
   end
 
   create_table "villages", :force => true do |t|
