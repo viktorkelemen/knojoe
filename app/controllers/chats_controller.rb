@@ -14,7 +14,7 @@ class ChatsController < ApplicationController
       #   Pusher["channel_user_#{user.id}"].trigger('chat_start_event', pusher_data)
       # end
       Pusher["presence-home"].trigger('chat_start_event', pusher_data)
-
+      @chat.messages.create(status: 'system', content: 'Waiting for the villagers...')
       redirect_to requester_chat_path(@chat)
     else
       render 'new'
@@ -30,6 +30,7 @@ class ChatsController < ApplicationController
     # if responder joined
     unless @chat.started_at
       @chat.update_attributes!(started_at: Time.now)
+      @chat.messages.create(status: 'system', content: 'responder joined.')
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'responder joined.')
 
       # sending all other responders that someone picked it up
@@ -61,12 +62,14 @@ class ChatsController < ApplicationController
   end
 
   def chat_timeout
+    @chat.messages.create(status: 'system', content: 'Time is up, requester please press the thank you button and exit.')
     Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Time is up, requester please press the thank you button and exit.')
     head :ok
   end
 
   def finish
     @chat.update_attributes!(finished_at: Time.now)
+    @chat.messages.create(status: 'system', content: params[:message])
     Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', params[:message])
     head :ok
   end
