@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
   private
 
   def return_path
-    path = 'knojoe://xxx' if cookies[:desktop]
+    path = "knojoe://logged_in?id=#{@identity.user.id}&session=#{cookies[:_knojoe_session]}" if cookies[:desktop]
     path || session.delete(:return_to) || root_url
   end
 end
