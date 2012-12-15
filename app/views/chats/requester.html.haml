@@ -55,7 +55,9 @@
 
   // Handling status events coming with pusher
   channel.bind('chat_status_event', function(data) {
-    addStatusMessage(data);
+    if (data && data.message) {
+      insertStatusMessage(data.message)
+    }
 
     // FIX: this should not be here
     // It is to detect when the villager joined the discussion
@@ -69,8 +71,8 @@
     initTimer(0);
   });
 
-  function addStatusMessage(message) {
-    $('<p/>').html(message).addClass('status_msg').appendTo('#messages');
+  function insertStatusMessage(message) {
+    $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
   }
 
 
@@ -79,7 +81,7 @@
       url: "#{connection_timeout_chat_path(@chat)}",
       type: "post",
       success: function() {
-        addStatusMessage('No one picked up')
+        insertStatusMessage('No one picked up')
       },
       error: function(error) {
         console.error(error);
@@ -115,7 +117,3 @@
       }
     });
   });
-
-  // jQuery(function($) {
-  //   addStatusMessage('Waiting for the villagers...');
-  // });

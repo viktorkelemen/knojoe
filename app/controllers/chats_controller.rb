@@ -31,7 +31,7 @@ class ChatsController < ApplicationController
     unless @chat.started_at
       @chat.update_attributes!(started_at: Time.now)
       @chat.messages.create(status: 'system', content: 'responder joined.')
-      Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'responder joined.')
+      Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: 'responder joined', type: 'join'})
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_start_event', @chat.started_at.to_i);
 
       # sending all other responders that someone picked it up
@@ -44,9 +44,9 @@ class ChatsController < ApplicationController
 
     end
 
-    if @chat.finished_at
-      render :text => "too late"
-    end
+    #if @chat.finished_at
+      #render :text => "too late"
+    #end
 
     @chat.update_attributes!(responder: current_user)
     @messages = @chat.messages
@@ -64,14 +64,14 @@ class ChatsController < ApplicationController
 
   def chat_timeout
     @chat.messages.create(status: 'system', content: 'Time is up, requester please press the thank you button and exit.')
-    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'Time is up, requester please press the thank you button and exit.')
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: 'Time is up, requester please press the thank you button and exit.', type: 'timeout' })
     head :ok
   end
 
   def finish
     @chat.update_attributes!(finished_at: Time.now)
     @chat.messages.create(status: 'system', content: params[:message])
-    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', params[:message])
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: params[:message], type: 'finish' })
     head :ok
   end
 

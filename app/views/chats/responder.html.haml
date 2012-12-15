@@ -29,7 +29,9 @@
   });
 
   channel.bind('chat_status_event', function(data) {
-    insertStatusMessage(data);
+    if (data && data.message) {
+      insertStatusMessage(data.message);
+    }
   });
 
   function initTimer(offset) {
