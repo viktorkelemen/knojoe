@@ -40,7 +40,7 @@ class ChatsController < ApplicationController
         message: "##{@chat.id} - picked up",
         timestamp: Time.now.strftime("%H:%m"),
         type: 'pickedup'
-      })
+      }, params[:socket_id])
 
     end
 
