@@ -45,6 +45,7 @@
       $(data.html).addClass('me_msg').appendTo('#messages');
     } else {
       $(data.html).appendTo('#messages');
+      $('#typing_msg').remove();
     }
 
     if (window.Cocoa) {
