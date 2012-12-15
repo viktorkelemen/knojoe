@@ -23,9 +23,6 @@
       $(data.html).appendTo('#messages');
     }
 
-    if (window.Cocoa) {
-      Cocoa.log(data.message);
-    }
   });
 
   channel.bind('chat_status_event', function(data) {
