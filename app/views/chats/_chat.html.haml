@@ -2,6 +2,8 @@
   = javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
 
 %h2 Chat
+= render 'timer'
+
 #messages= render @messages
 
 = render 'message_form'

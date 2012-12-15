@@ -1,0 +1,29 @@
+.timer_container {
+  width: 120px;
+  float: right;
+  height: 25px;
+  margin-top: 5px;
+  background: url(/assets/clock_icon.png) 0px 0px no-repeat;
+  padding-left: 30px;
+  padding-top: 2px;
+
+  .timer_frame {
+    width: 118px;
+    height: 20px;
+    border: 1px solid #000;
+  }
+
+  &.warning .timer_frame {
+    border: 1px solid #f00;
+    .timer {
+      background: #f00;
+    }
+  }
+}
+
+.timer {
+  display: block;
+  background: #000;
+  height: 100%;
+  width: 0;
+}
