@@ -28,6 +28,10 @@
   channel.bind('chat_status_event', function(data) {
     if (data && data.message) {
       insertStatusMessage(data.message);
+
+      if (data.type === 'finish') {
+        $('#message_content, .send_btn').attr('disabled','disabled')
+      }
     }
   });
 
