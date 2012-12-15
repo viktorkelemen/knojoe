@@ -86,6 +86,11 @@ class ChatsController < ApplicationController
     redirect_to review_chat_path(@chat), notice: 'Sent!'
   end
 
+  def status
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_typing_event', params[:status], params[:socket_id])
+    head 200
+  end
+
   private
 
   def find_chat

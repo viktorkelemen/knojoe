@@ -4,6 +4,6 @@
 %h2 Chat
 = render 'timer'
 
-#messages= render @messages
+#messages{ 'data-id' => @chat.id }= render @messages
 
 = render 'message_form'
