@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(:version => 20121208084332) do
     t.integer  "requester_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.integer  "village_id"
     t.datetime "started_at"
     t.datetime "finished_at"
   end
@@ -55,16 +54,6 @@ ActiveRecord::Schema.define(:version => 20121208084332) do
 
   add_index "messages", ["chat_id"], :name => "index_messages_on_chat_id"
 
-  create_table "participations", :force => true do |t|
-    t.integer  "village_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "participations", ["user_id"], :name => "index_participations_on_user_id"
-  add_index "participations", ["village_id"], :name => "index_participations_on_village_id"
-
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "image"
@@ -73,12 +62,4 @@ ActiveRecord::Schema.define(:version => 20121208084332) do
     t.string   "email"
     t.integer  "received_likes_count", :default => 0
   end
-
-  create_table "villages", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.integer  "villagers_count", :default => 0
-  end
-
 end
