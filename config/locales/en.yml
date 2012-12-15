@@ -3,7 +3,6 @@
 
 en:
   chats:
-    villager_exists: 'Someone already responsed to it.'
   chat_mailer:
     send_conversation:
       subject: '[Knojoe] You conversation history'

@@ -14,7 +14,7 @@ class ChatsController < ApplicationController
       #   Pusher["channel_user_#{user.id}"].trigger('chat_start_event', pusher_data)
       # end
       Pusher["presence-home"].trigger('chat_start_event', pusher_data)
-      @chat.messages.create(status: 'system', content: 'Waiting for the villagers...')
+      @chat.messages.create(status: 'system', content: 'Waiting for the responder...')
       redirect_to requester_chat_path(@chat)
     else
       render 'new'
