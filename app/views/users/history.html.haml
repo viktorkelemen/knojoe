@@ -1,0 +1,3 @@
+%ul
+  - @chats.each do |chat|
+    %li= link_to chat.messages.first.content, review_chat_path(chat)

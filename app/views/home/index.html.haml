@@ -4,9 +4,9 @@
 - if current_user
   = render 'dashboard'
 
-  = "Asked: #{ current_user.asked_questions.size }"
+  = link_to "Asked: #{ current_user.asked_questions.size }", asked_user_path(current_user)
   %br
-  = "Helped: #{ current_user.answered_questions.size }"
+  = link_to "Helped: #{ current_user.helped_questions.size }", helped_user_path(current_user)
   %br
 It's Knojoe!
 

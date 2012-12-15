@@ -28,5 +28,10 @@ Knojoe::Application.routes.draw do
     end
   end
 
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show] do
+    member do
+      get 'asked'
+      get 'helped'
+    end
+  end
 end
