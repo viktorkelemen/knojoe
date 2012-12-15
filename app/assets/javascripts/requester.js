@@ -7,16 +7,7 @@ function updateTimerUI(value) {
 }
 
 $( function () {
-
-  var timer = K.Timer(10, 3);
-  timer.start();
-
-  timer.promise().progress( function (value) {
-    updateTimerUI(value);
-  });
-
-  timer.promise().done( function (value) {
-    updateTimerUI(value);
-    console.log('finished');
-  });
+  if (chatTimerOffset !== -1) {
+    initTimer(chatTimerOffset);
+  }
 });

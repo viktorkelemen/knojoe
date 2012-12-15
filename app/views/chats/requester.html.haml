@@ -5,6 +5,10 @@
     = link_to 'Thank you and exit', '#', class: 'btn btn-danger finish_button'
 
 :javascript
+  var chatTimerOffset = #{ @chat.started_at || -1 };
+
+  var chatStartTime = 0;
+
   var CONNECTION_TIMEOUT_LIMIT = 30 * 1000;
   var connectionTimer = setTimeout(function(){
     sendConnectionTimeup();
@@ -12,13 +16,6 @@
 
   var CHAT_TIMEOUT_LIMIT = 3 * 60 * 1000;
   var CHAT_TIMEOUT_WARNING = 10 * 1000;
-  var chatTimer = setTimeout(function(){
-
-    setInterval( function () {
-      sendChatTimeup();
-    }, CHAT_TIMEOUT_WARNING);
-
-  }, CHAT_TIMEOUT_LIMIT);
 
 
   // Enable pusher logging - don't include this in production
@@ -31,6 +28,19 @@
 
   var pusher = new Pusher('13ea71fd49c7de808650');
   var channel = pusher.subscribe("channel_chat_#{@chat.id}");
+
+  function initTimer(offset) {
+    timer = K.Timer(offset);
+    timer.start();
+    timer.promise().progress( function (value) {
+      updateTimerUI(value);
+     });
+
+    timer.promise().done( function (value) {
+      updateTimerUI(value);
+      console.log('finished');
+    });
+  }
   channel.bind('chat_event', function(data) {
 
     if (data.author_id == #{current_user.id}) {
@@ -54,6 +64,10 @@
       clearTimeout(connectionTimer);
       connectionTimer = undefined;
     };
+  });
+
+  channel.bind('chat_start_event', function(data) {
+    initTimer(0);
   });
 
   function addStatusMessage(message) {

@@ -1,9 +1,9 @@
 var K = K || {};
 
-K.Timer = function (limit, increment) {
+K.Timer = function (offset, limit, increment) {
 
   limit = limit || 60; // for how long (sec)
-  increment = increment || 5; // for how often (sec)
+  increment = increment || 1; // for how often (sec)
 
   var counter = 0;
   var timer_id;
@@ -16,7 +16,8 @@ K.Timer = function (limit, increment) {
 
     df = $.Deferred();
 
-    counter = 0;
+    counter = offset / limit * increment;
+
     df.notify(counter);
     counter += 1 / limit * increment;
 

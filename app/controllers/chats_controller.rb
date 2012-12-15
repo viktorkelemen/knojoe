@@ -32,6 +32,7 @@ class ChatsController < ApplicationController
       @chat.update_attributes!(started_at: Time.now)
       @chat.messages.create(status: 'system', content: 'responder joined.')
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', 'responder joined.')
+      Pusher["channel_chat_#{@chat.id}"].trigger('chat_start_event', @chat.started_at.to_i);
 
       # sending all other responders that someone picked it up
       Pusher["presence-home"].trigger('chat_pickedup_event', {
