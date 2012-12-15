@@ -5,9 +5,7 @@
     = link_to 'Thank you and exit', '#', class: 'btn btn-danger finish_button'
 
 :javascript
-  var chatTimerOffset = #{ @chat.started_at || -1 };
-
-  var chatStartTime = 0;
+  var chatTimerOffset = #{ @chat.started_offset(-1) };
 
   var CONNECTION_TIMEOUT_LIMIT = 30 * 1000;
   var connectionTimer = setTimeout(function(){

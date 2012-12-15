@@ -10,6 +10,14 @@ class Chat < ActiveRecord::Base
 
   before_create :create_initial_message, if: 'initial_message'
 
+  def started_offset(default=-1)
+    if started_at
+      (Time.now - started_at.to_i).to_i
+    else
+      default
+    end
+  end
+
   private
 
   def create_initial_message

@@ -4,6 +4,7 @@
     = link_to 'Exit', '#', id: 'exit_chat', class: 'btn btn-danger'
 
 :javascript
+  var chatTimerOffset = #{ @chat.started_offset(-1) };
   // Enable pusher logging - don't include this in production
   Pusher.log = function(message) {
     if (window.console && window.console.log) window.console.log(message);
@@ -31,11 +32,29 @@
     insertStatusMessage(data);
   });
 
+  function initTimer(offset) {
+    timer = K.Timer(offset);
+    timer.start();
+    timer.promise().progress( function (value) {
+      updateTimerUI(value);
+     });
+
+    timer.promise().done( function (value) {
+      updateTimerUI(value);
+      console.log('finished');
+    });
+  }
+
   function insertStatusMessage(message) {
     $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
   }
 
   jQuery(function($) {
+
+    if (chatTimerOffset !== -1) {
+      initTimer(chatTimerOffset);
+    }
+
     $("#exit_chat").on('click', function(e){
       e.preventDefault();
       $.ajax({
