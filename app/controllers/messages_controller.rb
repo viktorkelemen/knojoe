@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_event', pusher_data)
       head :ok
     else
-      render :text => "ng"
+      render :text => @message.errors.full_messages.join
     end
   end
 

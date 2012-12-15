@@ -6,6 +6,11 @@ class Message < ActiveRecord::Base
   has_one :like
 
   # validates :author, presence: true
+  validate :chat_finished
+
+  def chat_finished
+    errors.add(:base, 'chat is finished') if chat.finished_at
+  end
 
   def liked?
     like.present?
