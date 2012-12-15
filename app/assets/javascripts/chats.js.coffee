@@ -30,11 +30,15 @@ $ ->
         class: 'message'
         id: 'typing_msg'
       }).html('...').appendTo($("#messages"))
+
     else
       $("#typing_msg").remove()
 
     console.log('chat typing event', data)
   )
+
+  $("#messages").bind "DOMSubtreeModified", ->
+    $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
 
   typingTimer = 0
   isTyping = false
