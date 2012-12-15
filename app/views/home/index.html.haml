@@ -4,6 +4,10 @@
 - if current_user
   = render 'dashboard'
 
+  = "Asked: #{ current_user.asked_questions.size }"
+  %br
+  = "Helped: #{ current_user.answered_questions.size }"
+  %br
 It's Knojoe!
 
 = link_to 'Start a new conversation', new_chat_path
