@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.11'
 gem 'thin'
 gem 'simple_form'
 gem 'twitter-bootstrap-rails'
