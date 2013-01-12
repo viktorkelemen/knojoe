@@ -22,20 +22,19 @@ $ ->
     if data.message_id
       $("#message_#{data.message_id}").find(".like_button, .unlike_button").toggle()
 
+  if $('.message_form').length > 0
+    channel.bind('chat_typing_event', (data) ->
+      if (data == 'typing')
+        $('<p>', {
+          class: 'message'
+          id: 'typing_msg'
+        }).html('...').appendTo($("#messages"))
 
-  channel.bind('chat_typing_event', (data) ->
+      else
+        $("#typing_msg").remove()
 
-    if (data == 'typing')
-      $('<p>', {
-        class: 'message'
-        id: 'typing_msg'
-      }).html('...').appendTo($("#messages"))
-
-    else
-      $("#typing_msg").remove()
-
-    console.log('chat typing event', data)
-  )
+      console.log('chat typing event', data)
+    )
 
   $("#messages").bind "DOMSubtreeModified", ->
     $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
