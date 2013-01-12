@@ -44,11 +44,14 @@
   // var channel = pusher.subscribe("channel_user_#{current_user.id}");
   var presenceChannel = pusher.subscribe("presence-home");
   // channel.bind('chat_start_event', addMsg);
-  presenceChannel.bind('chat_start_event', addMsg);
-  presenceChannel.bind('chat_pickedup_event', addMsg);
 
   presenceChannel.bind('pusher:subscription_succeeded', function() {
     $('.msgboard .msg .pickup').each(function(index, link) {
       $(link).setOrUpdateParam('socket_id', pusher.connection.socket_id);
     });
   });
+
+- if current_user.available_for_push_notification?
+  :javascript
+    presenceChannel.bind('chat_start_event', addMsg);
+    presenceChannel.bind('chat_pickedup_event', addMsg);
