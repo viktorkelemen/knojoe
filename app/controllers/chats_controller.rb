@@ -57,8 +57,12 @@ class ChatsController < ApplicationController
   end
 
   def connection_timeout
+    return head :bad_request if @chat.finished?
+
     # after requester send the request, and no responder respond in time
+    message = @chat.messages.create!(status: 'system', content: 'No one picked up.')
     @chat.update_attributes!(finished_at: Time.now)
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: message.content, type: 'timeout'})
     head :ok
   end
 

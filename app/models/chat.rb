@@ -18,6 +18,14 @@ class Chat < ActiveRecord::Base
     end
   end
 
+  def finished?
+    !!finished_at
+  end
+
+  def started?
+    !!started_at
+  end
+
   private
 
   def create_initial_message
