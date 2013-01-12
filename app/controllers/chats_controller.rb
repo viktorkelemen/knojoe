@@ -38,7 +38,7 @@ class ChatsController < ApplicationController
       Pusher["presence-home"].trigger('chat_pickedup_event', {
         chat_id: @chat.id,
         message: "##{@chat.id} - picked up",
-        timestamp: Time.now.strftime("%H:%m"),
+        timestamp: Time.now.strftime("%H:%M"),
         type: 'pickedup'
       }, params[:socket_id])
 
@@ -106,9 +106,9 @@ class ChatsController < ApplicationController
       chat_id:      @chat.id,
       chat_path:    responder_chat_path(@chat),
       message:      "##{@chat.id} - #{@chat.messages.first.content}",
-      timestamp:    @chat.created_at.strftime("%H:%m"),
+      timestamp:    @chat.created_at.strftime("%H:%M"),
       type:         'new'
-      # # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m"),
+      # # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%M"),
       # html:      render_to_string(partial: 'message', locals: { message: @message, check_role: false })
     }
   end

@@ -3,7 +3,7 @@
   .msgboard
     - @recent_chats.each do |chat|
       .msg{data: { chat_id: chat.id} }
-        %time= chat.created_at.strftime("%H:%m")
+        %time= chat.created_at.strftime("%H:%M")
         %p ##{chat.id} - #{chat.messages.first.try(:content)}
         - if chat.started?
           = link_to 'Pickup', '#', class: 'btn pickup', disabled: true

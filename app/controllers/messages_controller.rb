@@ -40,7 +40,7 @@ class MessagesController < ApplicationController
     {
       message:   @message.content,
       author_id:    @message.author_id,
-      # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%m"),
+      # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%M"),
       html:      render_to_string(partial: 'message', locals: { message: @message, check_role: false })
     }
   end
