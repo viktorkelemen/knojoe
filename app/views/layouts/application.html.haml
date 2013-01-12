@@ -26,6 +26,14 @@
           .container.nav-collapse
             %ul.nav
               %li= link_to "Ranking", users_path
+              %li
+                = link_to asked_user_path(current_user), rel: 'tooltip', title: 'Asked questions', data: { placement: 'bottom' } do
+                  %i.icon-bullhorn
+                  %strong #{ current_user.asked_questions.size }
+              %li
+                = link_to helped_user_path(current_user), rel: 'tooltip', title: 'Helped questions', data: { placement: 'bottom' } do
+                  %i.icon-heart
+                  %strong #{ current_user.helped_questions.size }
             %ul.nav.pull-right
               - if signed_in?
                 %li.dropdown

@@ -1,6 +1,8 @@
 class HomeController < ApplicationController
   def index
     @recent_chats = Chat.recent
+
+    @chat = Chat.new
   end
 
   def hook

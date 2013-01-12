@@ -2,12 +2,13 @@
   = javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
 
 - if current_user
-  = render 'dashboard'
-
-  = link_to "Asked: #{ current_user.asked_questions.size }", asked_user_path(current_user)
-  %br
-  = link_to "Helped: #{ current_user.helped_questions.size }", helped_user_path(current_user)
-  %br
-It's Knojoe!
-
-= link_to 'Start a new conversation', new_chat_path
+  .row
+    .span5
+      = render 'dashboard'
+    .span1
+    .span6
+      .span4
+        %h2 New conversation
+        = simple_form_for Chat.new do |f|
+          = f.input :initial_message, as: :text, input_html: { class: 'span4', rows: 5 }
+          = f.button :submit, class: 'btn-primary btn-block'

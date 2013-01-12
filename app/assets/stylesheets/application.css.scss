@@ -15,3 +15,12 @@
 
 @import 'dashboard';
 @import 'timer';
+
+abbr.timeago {
+  border-bottom: none;
+  cursor: default;
+  color: #BBB;
+  font-weight: normal;
+  font-size: 13px;
+  border: none;
+}

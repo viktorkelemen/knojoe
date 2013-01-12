@@ -1,14 +1,17 @@
 .dashboard
-  %h2 Villager Dashboard
+  %h2 Dashboard
   .msgboard
     - @recent_chats.each do |chat|
       .msg{data: { chat_id: chat.id} }
-        %time= chat.created_at.strftime("%H:%M")
-        %p ##{chat.id} - #{chat.messages.first.try(:content)}
-        - if chat.started?
-          = link_to 'Pickup', '#', class: 'btn pickup', disabled: true
-        - else
-          = link_to 'Pickup', responder_chat_path(chat), class: 'btn pickup'
+        .row-fluid
+          .span10
+            %p= chat.messages.first.try(:content)
+            = timeago(chat.created_at)
+          .span2
+            - if chat.started? || chat.finished?
+              = link_to 'Pickup', '#', class: 'btn pickup', disabled: true
+            - else
+              = link_to 'Pickup', responder_chat_path(chat), class: 'btn pickup btn-success'
 :javascript
 
   function addMsg(data) {
