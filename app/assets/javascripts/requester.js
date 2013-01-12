@@ -7,7 +7,9 @@ function updateTimerUI(value) {
 }
 
 $( function () {
-  if (chatTimerOffset !== -1) {
-    initTimer(chatTimerOffset);
+  if ($('.message_form').length > 1) {
+    if (chatTimerOffset !== -1) {
+      initTimer(chatTimerOffset);
+    }
   }
 });

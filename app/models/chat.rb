@@ -8,6 +8,8 @@ class Chat < ActiveRecord::Base
 
   validates :requester, presence: true
 
+  scope :recent, ->(limit = 5) { order('created_at DESC').limit(limit) }
+
   before_create :create_initial_message, if: 'initial_message'
 
   def started_offset(default=-1)

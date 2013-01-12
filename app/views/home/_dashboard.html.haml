@@ -1,7 +1,14 @@
 .dashboard
   %h2 Villager Dashboard
   .msgboard
-
+    - @recent_chats.each do |chat|
+      .msg{data: { chat_id: chat.id} }
+        %time= chat.created_at.strftime("%H:%m")
+        %p ##{chat.id} - #{chat.messages.first.try(:content)}
+        - if chat.started?
+          = link_to 'Pickup', '#', class: 'btn pickup', disabled: true
+        - else
+          = link_to 'Pickup', responder_chat_path(chat), class: 'btn pickup'
 :javascript
 
   function addMsg(data) {
@@ -39,3 +46,9 @@
   // channel.bind('chat_start_event', addMsg);
   presenceChannel.bind('chat_start_event', addMsg);
   presenceChannel.bind('chat_pickedup_event', addMsg);
+
+  presenceChannel.bind('pusher:subscription_succeeded', function() {
+    $('.msgboard .msg .pickup').each(function(index, link) {
+      $(link).setOrUpdateParam('socket_id', pusher.connection.socket_id);
+    });
+  });
