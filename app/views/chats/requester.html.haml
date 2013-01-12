@@ -6,18 +6,25 @@
 
 :javascript
   var chatTimerOffset = #{ @chat.started_offset(-1) };
+  var connectionTimer;
 
 - unless @chat.finished? || @chat.started?
   :javascript
     var CONNECTION_TIMEOUT_LIMIT = 30 * 1000;
-    var connectionTimer = setTimeout(function(){
+    connectionTimer = setTimeout(function(){
       sendConnectionTimeup();
     }, CONNECTION_TIMEOUT_LIMIT);
 
-    var CHAT_TIMEOUT_LIMIT = 3 * 60 * 1000;
+:javascript
+    var CHAT_TIMEOUT_LIMIT = (3 * 60 - chatTimerOffset) * 1000;
     var CHAT_TIMEOUT_WARNING = 10 * 1000;
 
-:javascript
+    var chatTimer = setTimeout(function(){
+      setInterval( function () {
+        sendChatTimeup();
+      }, CHAT_TIMEOUT_WARNING);
+    }, CHAT_TIMEOUT_LIMIT);
+
   // Enable pusher logging - don't include this in production
   Pusher.log = function(message) {
     if (window.console && window.console.log) window.console.log(message);
@@ -118,4 +125,10 @@
         console.error(error);
       }
     });
+  });
+
+  jQuery(function($) {
+    if (chatTimerOffset !== -1) {
+      initTimer(chatTimerOffset);
+    }
   });
