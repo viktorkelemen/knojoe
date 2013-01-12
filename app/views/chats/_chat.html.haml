@@ -7,3 +7,8 @@
 #messages{ 'data-id' => @chat.id }= render @messages
 
 = render 'message_form'
+
+:javascript
+  jQuery(function($) {
+    $('#messages').scrollTop($('#messages').prop("scrollHeight"));
+  });
