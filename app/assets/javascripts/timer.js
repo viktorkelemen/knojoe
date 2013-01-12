@@ -2,7 +2,7 @@ var K = K || {};
 
 K.Timer = function (offset, limit, increment) {
 
-  limit = limit || 60; // for how long (sec)
+  limit = limit || 180; // for how long (sec)
   increment = increment || 1; // for how often (sec)
 
   var counter = 0;
