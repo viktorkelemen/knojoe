@@ -10,6 +10,7 @@ gem 'kaminari'
 gem 'exception_notification'
 gem 'jquery-rails'
 gem 'pusher'
+gem 'delayed_job_active_record'
 
 group :development do
   gem 'awesome_print'
