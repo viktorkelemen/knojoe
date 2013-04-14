@@ -11,6 +11,7 @@ gem 'exception_notification'
 gem 'jquery-rails'
 gem 'pusher'
 gem 'delayed_job_active_record'
+gem 'figaro'
 
 group :development do
   gem 'awesome_print'
