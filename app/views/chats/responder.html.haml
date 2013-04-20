@@ -5,15 +5,7 @@
 
 :javascript
   var chatTimerOffset = #{ @chat.started_offset(-1) };
-  // Enable pusher logging - don't include this in production
-  Pusher.log = function(message) {
-    if (window.console && window.console.log) window.console.log(message);
-  };
 
-  // Flash fallback logging - don't include this in production
-  WEB_SOCKET_DEBUG = true;
-
-  var pusher = new Pusher('13ea71fd49c7de808650');
   var channel = pusher.subscribe("channel_chat_#{@chat.id}");
   channel.bind('chat_event', function(data) {
 
