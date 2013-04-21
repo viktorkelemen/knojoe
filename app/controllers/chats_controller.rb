@@ -107,7 +107,8 @@ class ChatsController < ApplicationController
       chat_path:    responder_chat_path(@chat),
       message:      "##{@chat.id} - #{@chat.messages.first.content}",
       timestamp:    @chat.created_at.strftime("%H:%M"),
-      type:         'new'
+      type:         'new',
+      active:       Chat.num_of_active_chats
       # # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%M"),
       # html:      render_to_string(partial: 'message', locals: { message: @message, check_role: false })
     }
