@@ -1,5 +1,21 @@
 .page-header
   %h2 #{@user.name}
 
+= link_to 'Turn on notifications','', id: 'notification_btn', class: 'hidden'
+
 %h2 Received Likes Count
 = @user.received_likes_count
+
+:javascript
+  if (window.webkitNotifications) {
+    $("#notification_btn").removeClass('hidden');
+  }
+
+  $( function () {
+    $('#notification_btn').on('click', function (event) {
+      if (window.webkitNotifications.checkPermission() != 0) {
+        window.webkitNotifications.requestPermission();
+      }
+      event.preventDefault();
+    });
+  });

@@ -21,7 +21,7 @@
 
   function addMsg(data) {
 
-    var entry;
+    var entry, url;
 
     if (data) {
 
@@ -36,7 +36,9 @@
       $('<p>').text(data.message).appendTo(entry);
       switch (data.type) {
         case 'new':
-          $('<a>').attr('href', data.chat_path + '?socket_id=' + pusher.connection.socket_id).addClass('btn').text('Pick up').appendTo(entry);
+          url = data.chat_path + '?socket_id=' + pusher.connection.socket_id;
+          $('<a>').attr('href', url).addClass('btn').text('Pick up').appendTo(entry);
+          $(document).trigger('ui-new-question', { msg: data.message, url: url });
           break;
         case 'pickedup':
           $('[data-chat-id=' + data.chat_id + ']').find('.btn').prop('disabled', 'disabled');
