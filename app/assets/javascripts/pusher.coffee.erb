@@ -1,0 +1,10 @@
+<% unless Rails.env.production? %>
+Pusher.log = (message) ->
+  console.log message if window.console and window.console.log
+
+# Flash fallback logging - don't include this in production
+WEB_SOCKET_DEBUG = true
+<% end %>
+
+# expose this to global
+window.pusher = new Pusher("<%= ENV['PUSHER_KEY'] %>")
