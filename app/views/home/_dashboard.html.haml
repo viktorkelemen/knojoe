@@ -1,3 +1,8 @@
+= content_for :title do
+  Knojoe
+  - num = Chat.num_of_active_chats
+  = "(%s)" % num if num > 0
+
 .dashboard
   %h2 Dashboard
   .msgboard
@@ -19,6 +24,12 @@
     var entry;
 
     if (data) {
+
+      // number of active chats
+      if (data.active) {
+        $(document).trigger('ui-num-of-active-chat', data.active);
+      }
+
       entry = $('<div>').attr('data-chat-id', data.chat_id).addClass('msg');
 
       $('<time>').text(data.timestamp).appendTo(entry);
@@ -29,6 +40,7 @@
           break;
         case 'pickedup':
           $('[data-chat-id=' + data.chat_id + ']').find('.btn').prop('disabled', 'disabled');
+          break;
       }
 
       $('.dashboard .msgboard').prepend(entry);

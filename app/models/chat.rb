@@ -36,6 +36,10 @@ class Chat < ActiveRecord::Base
   end
   handle_asynchronously :check_connection_timeout, run_at: Proc.new { 3.minutes.from_now }
 
+  def self.num_of_active_chats
+    Chat.where('started_at IS NULL AND finished_at IS NULL').count
+  end
+
   private
 
   def create_initial_message

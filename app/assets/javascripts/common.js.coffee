@@ -1,3 +1,12 @@
+updateTitleCounter = (count) ->
+  title = "Knojoe"
+  title += " (#{ count })" if count > 0
+  document.title = title
+
+$(document).on('ui-num-of-active-chat', (event, active_chats_count) ->
+  updateTitleCounter(active_chats_count)
+)
+
 $ ->
   $("abbr.timeago").timeago()
 
