@@ -76,4 +76,9 @@ Knojoe::Application.configure do
   }
 
   config.action_mailer.default_url_options = { host: 'knojoe.com' }
+
+  config.middleware.use ExceptionNotifier,
+                        email_prefix:         '[Knojoe]',
+                        sender_address:       'exception@knojoe.com',
+                        exception_recipients: 'fantasyday@gmail.com'
 end
