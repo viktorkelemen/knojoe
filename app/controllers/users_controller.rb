@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :find_user, only: [:show, :helped, :asked]
+  before_filter :set_user, only: [:show, :helped, :asked]
 
   def index
     @users = User.order('received_likes_count DESC').limit(10)
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   private
 
-  def find_user
+  def set_user
     @user = User.find(params[:id])
   end
 end

@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   before_filter :require_login
-  before_filter :find_chat, except: [:new, :create]
+  before_filter :set_chat, except: [:new, :create]
 
   def new
   end
@@ -10,9 +10,6 @@ class ChatsController < ApplicationController
     @chat.requester = current_user
 
     if @chat.save
-      # User.all.each do |user|
-      #   Pusher["channel_user_#{user.id}"].trigger('chat_start_event', pusher_data)
-      # end
       Pusher["presence-home"].trigger('chat_start_event', pusher_data)
       @chat.messages.create(status: 'system', content: 'Waiting for the responder...')
       redirect_to requester_chat_path(@chat)
@@ -28,8 +25,8 @@ class ChatsController < ApplicationController
     end
 
     # if responder joined
-    unless @chat.started_at
-      @chat.update_attributes!(started_at: Time.now)
+    unless @chat.started?
+      @chat.start
       @chat.messages.create(status: 'system', content: 'responder joined.')
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: 'responder joined', type: 'join'})
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_start_event', @chat.started_at.to_i);
@@ -48,7 +45,7 @@ class ChatsController < ApplicationController
       #render :text => "too late"
     #end
 
-    @chat.update_attributes!(responder: current_user)
+    @chat.assign_responder(current_user)
     @messages = @chat.messages
   end
 
@@ -61,7 +58,7 @@ class ChatsController < ApplicationController
 
     # after requester send the request, and no responder respond in time
     message = @chat.messages.create!(status: 'system', content: 'No one picked up.')
-    @chat.update_attributes!(finished_at: Time.now)
+    @chat.finish
     Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: message.content, type: 'timeout'})
     head :ok
   end
@@ -73,14 +70,14 @@ class ChatsController < ApplicationController
   end
 
   def finish
-    @chat.update_attributes!(finished_at: Time.now)
+    @chat.finish
     @chat.messages.create(status: 'system', content: params[:message])
     Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: params[:message], type: 'finish' })
     head :ok
   end
 
   def review
-    raise 'error' unless @chat.finished_at
+    raise 'error' unless @chat.finished?
     raise 'error' unless @chat.requester == current_user || @chat.responder == current_user
     @messages = @chat.messages
   end
@@ -97,7 +94,7 @@ class ChatsController < ApplicationController
 
   private
 
-  def find_chat
+  def set_chat
     @chat = Chat.includes(messages: [:author]).find(params[:id])
   end
 
@@ -109,8 +106,6 @@ class ChatsController < ApplicationController
       timestamp:    @chat.created_at.strftime("%H:%M"),
       type:         'new',
       active:       Chat.num_of_active_chats
-      # # timestamp: @message.created_at.strftime("%Y/%m/%d %H:%M"),
-      # html:      render_to_string(partial: 'message', locals: { message: @message, check_role: false })
     }
   end
 end

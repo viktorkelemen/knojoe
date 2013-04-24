@@ -13,7 +13,7 @@ class Chat < ActiveRecord::Base
   before_create :create_initial_message, if: 'initial_message'
   after_create :check_connection_timeout
 
-  def started_offset(default=-1)
+  def started_offset(default = -1)
     if started_at
       (Time.now - started_at.to_i).to_i
     else
@@ -25,8 +25,23 @@ class Chat < ActiveRecord::Base
     !!finished_at
   end
 
+  def finish
+    self.finished_at = Time.now
+    save!
+  end
+
   def started?
     !!started_at
+  end
+
+  def start
+    self.started_at = Time.now
+    save!
+  end
+
+  def assign_responder(user)
+    self.responder = user
+    save!
   end
 
   def check_connection_timeout
@@ -37,7 +52,7 @@ class Chat < ActiveRecord::Base
   handle_asynchronously :check_connection_timeout, run_at: Proc.new { 3.minutes.from_now }
 
   def self.num_of_active_chats
-    Chat.where('started_at IS NULL AND finished_at IS NULL').count
+    where(started_at: nil, finished_at: nil).count
   end
 
   private
