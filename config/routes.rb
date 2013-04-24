@@ -5,6 +5,10 @@ Knojoe::Application.routes.draw do
   match '/login', to: 'sessions#new'
   match '/logout', to: 'sessions#destroy'
 
+  constraints subdomain: 'beta' do
+    root to: 'home#beta'
+  end
+
   root to: 'home#index'
 
   get 'home/hook'
@@ -34,4 +38,5 @@ Knojoe::Application.routes.draw do
       get 'helped'
     end
   end
+
 end
