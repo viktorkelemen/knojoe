@@ -1,9 +1,8 @@
 Knojoe::Application.routes.draw do
-  match '/auth/:provider/callback', to: 'sessions#create'
-  match '/auth/failure', to: redirect('/')
-  match '/logout', to: 'sessions#destroy'
-  match '/login', to: 'sessions#new'
-  match '/logout', to: 'sessions#destroy'
+  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
+  get '/auth/failure', to: redirect('/')
+  get '/login', to: 'sessions#new'
+  get '/logout', to: 'sessions#destroy'
 
   constraints subdomain: 'beta' do
     root to: 'home#beta'
