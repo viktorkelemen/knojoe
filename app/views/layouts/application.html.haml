@@ -22,7 +22,8 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand(href="/") Knojoe
+          = link_to root_url(subdomain: false), class: 'brand' do
+            = image_tag 'knojoe_logo_09.png', alt: 'Knojoe', class: 'logo'
           .container.nav-collapse
             %ul.nav
               %li= link_to "Ranking", users_path
