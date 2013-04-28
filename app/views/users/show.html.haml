@@ -1,21 +1,52 @@
 .page-header
   %h2 #{@user.name}
 
-= link_to 'Turn on notifications','', id: 'notification_btn', class: 'hidden'
+= label_tag 'notifications' do
+  = check_box_tag 'notifications'
+  Desktop Notifications
 
 %h2 Received Likes Count
 = @user.received_likes_count
 
 :javascript
-  if (window.webkitNotifications) {
-    $("#notification_btn").removeClass('hidden');
+  var storageKey = 'knojoe:browser-notifications';
+
+  // requests permission if necessary
+  function requestPermission() {
+    if (window.webkitNotifications.checkPermission() != 0) {
+      window.webkitNotifications.requestPermission();
+    }
   }
 
-  $( function () {
-    $('#notification_btn').on('click', function (event) {
-      if (window.webkitNotifications.checkPermission() != 0) {
-        window.webkitNotifications.requestPermission();
+  function initNotificationButton() {
+
+    var val;
+
+    var btn = $('#notifications');
+
+    // initial
+    if (val = window.localStorage.getItem(storageKey)) {
+      if (val === 'on') {
+        requestPermission();
+        btn.prop('checked', true);
       }
-      event.preventDefault();
+    } else {
+      btn.prop('checked', false);
+    }
+
+    btn.change( function (e) {
+      if (btn.prop('checked')) {
+        requestPermission();
+        window.localStorage.setItem(storageKey,'on');
+      } else {
+        window.localStorage.removeItem(storageKey);
+      }
     });
+  }
+
+
+  $( function () {
+    if (window.webkitNotifications && window.localStorage) {
+      initNotificationButton();
+    }
   });

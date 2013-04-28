@@ -11,6 +11,7 @@
  *= require_self
  *= require bootstrap_and_overrides
  *= require chats
+ *= require users
  */
 
 @import 'dashboard';
@@ -31,8 +32,4 @@ abbr.timeago {
 
 .logo {
   height: 20px;
-}
-
-.hidden {
-  display: none;
 }
