@@ -16,6 +16,9 @@ $(document).on('ui-num-of-active-chat', (event, active_chats_count) ->
 )
 
 $(document).on('ui-new-question', (event, data) ->
+
+  if (soundNotification = $('#notification_sound'))
+    soundNotification[0].play()
   if window.localStorage && window.localStorage.getItem(storageKey) is 'on' &&
   window.webkitNotifications && window.webkitNotifications.checkPermission() == 0
     sendNotification(data.msg)
