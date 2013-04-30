@@ -47,7 +47,7 @@ class Chat < ActiveRecord::Base
   def check_connection_timeout
     # do not close it if there is a responder
     return if finished? || responder
-    update_attributes!(finished_at: Time.now)
+    finish
   end
   handle_asynchronously :check_connection_timeout, run_at: Proc.new { 3.minutes.from_now }
 
