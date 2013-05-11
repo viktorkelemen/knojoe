@@ -3,6 +3,7 @@ class HomeController < ApplicationController
     @recent_chats = Chat.recent
 
     @chat = Chat.new
+    @chat.messages.new
   end
 
   def hook

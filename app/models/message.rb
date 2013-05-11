@@ -9,7 +9,7 @@ class Message < ActiveRecord::Base
   validate :chat_finished
 
   def chat_finished
-    errors.add(:base, 'chat is finished') if chat.finished_at
+    errors.add(:base, 'chat is finished') if chat.try(:finished?)
   end
 
   def liked?

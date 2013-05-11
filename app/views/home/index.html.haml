@@ -6,6 +6,10 @@
     .span6
       .span4
         %h2 New conversation
-        = simple_form_for Chat.new do |f|
-          = f.input :initial_message, as: :text, input_html: { class: 'span4', rows: 5 }
+        = simple_form_for @chat do |f|
+          = f.simple_fields_for :messages do |message_form|
+            = message_form.input :content, as: :text,
+              input_html: { class: 'span4', rows: 5 },
+              label: "Initial message",
+              required: false
           = f.button :submit, 'Knojoe it', class: 'btn-primary btn-block'

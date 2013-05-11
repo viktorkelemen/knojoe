@@ -1,16 +1,17 @@
 class Chat < ActiveRecord::Base
-  attr_accessible :requester, :responder, :initial_message, :started_at, :finished_at
-  attr_accessor :initial_message
+  attr_accessible :requester, :responder, :started_at, :finished_at, :messages_attributes
 
   belongs_to :requester, foreign_key: :requester_id, class_name: 'User'
   belongs_to :responder, foreign_key: :responder_id, class_name: 'User'
   has_many :messages
+  has_one :first_message, class_name: 'Message', order: 'messages.created_at ASC'
+
+  accepts_nested_attributes_for :messages, reject_if: :all_blank
 
   validates :requester, presence: true
 
   scope :recent, ->(limit = 5) { order('created_at DESC').limit(limit) }
 
-  before_create :create_initial_message, if: 'initial_message'
   after_create :check_connection_timeout
 
   def started_offset(default = -1)
@@ -53,11 +54,5 @@ class Chat < ActiveRecord::Base
 
   def self.num_of_active_chats
     where(started_at: nil, finished_at: nil).count
-  end
-
-  private
-
-  def create_initial_message
-    messages.new(content: initial_message, author: requester)
   end
 end
