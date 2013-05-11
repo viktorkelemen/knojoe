@@ -10,14 +10,10 @@ class UsersController < ApplicationController
 
   def asked
     @chats = @user.asked_questions
-
-    render 'history'
   end
 
   def helped
     @chats = @user.helped_questions
-
-    render 'history'
   end
 
   private

@@ -1,3 +1,32 @@
+@import 'colors';
+
 #notifications {
   margin: 0;
+}
+
+.histories {
+  list-style-type: none;
+  margin: 0;
+}
+
+.history {
+  border-bottom: 1px solid $list-border-color;
+
+  &:hover {
+    background-color: $hover-background-color;
+  }
+}
+
+.chat_message {
+  padding-top: 15px;
+  font-size: 1.3em;
+}
+
+.meta_info {
+  color: $meta-info-color;
+  margin: 10px 0 15px;
+}
+
+.chat_status {
+  padding-right: 15px;
 }
