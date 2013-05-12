@@ -1,0 +1,17 @@
+%ul.histories
+  - chats.each do |chat|
+    %li.history
+      .chat_message= link_to chat.messages.first.content, review_chat_path(chat)
+      .meta_info<
+        %span.chat_status
+          %i.icon-comments-alt
+          - if chat.responder
+            Connected
+            = chat.connected_time
+            ^_^
+          - else
+            No one picked up...
+            >_<
+        %span.time
+          %i.icon-time
+          #{timeago chat.created_at}

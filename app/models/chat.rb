@@ -40,6 +40,14 @@ class Chat < ActiveRecord::Base
     save!
   end
 
+  def connected_time
+    return unless finished_at && started_at
+
+    connected = finished_at - started_at
+    format = connected > 60 ? '%Mm %Ss' : '%Ss'
+    Time.at(connected).strftime(format)
+  end
+
   def assign_responder(user)
     self.responder = user
     save!
