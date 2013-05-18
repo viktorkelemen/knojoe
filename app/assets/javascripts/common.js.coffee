@@ -30,3 +30,8 @@ $ ->
   $("body").on("click", "a[disabled]", (event) ->
     event.preventDefault()
   )
+
+  #Adding the socket_id to the form when a new chat created
+  $("#new_chat").submit (event) ->
+    if pusher?.connection?.socket_id?
+      $(this).find('#socket_id').val(pusher.connection.socket_id)

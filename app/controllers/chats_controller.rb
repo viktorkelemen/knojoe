@@ -10,7 +10,7 @@ class ChatsController < ApplicationController
     @chat.requester = current_user
 
     if @chat.save
-      Pusher["presence-home"].trigger('chat_start_event', pusher_data)
+      Pusher["presence-home"].trigger('chat_start_event', pusher_data, params[:socket_id])
       @chat.messages.create(status: 'system', content: 'Waiting for the responder...')
       redirect_to requester_chat_path(@chat)
     else
