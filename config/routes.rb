@@ -4,10 +4,7 @@ Knojoe::Application.routes.draw do
   get '/login', to: 'sessions#new'
   get '/logout', to: 'sessions#destroy'
 
-  constraints subdomain: 'beta' do
-    root to: 'home#beta'
-  end
-
+  root to: 'home#index_static', constraints: lambda{ |req| req.session[:user_id].blank? }
   root to: 'home#index'
 
   get 'home/hook'
