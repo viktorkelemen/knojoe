@@ -6,6 +6,10 @@ class HomeController < ApplicationController
     @chat.messages.new
   end
 
+  def index_static
+    render layout: false
+  end
+
   def hook
     webhook = Pusher::WebHook.new(request)
     if webhook.valid?
