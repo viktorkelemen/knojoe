@@ -7,7 +7,6 @@ class HomeController < ApplicationController
   end
 
   def index_static
-    render layout: false
   end
 
   def hook
