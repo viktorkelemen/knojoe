@@ -14,7 +14,7 @@
     - if content_for?(:head)
       = content_for(:head)
 
-  %body
+  %body{ :class => absolute_css_classes }
     .navbar.navbar-fixed-top
       .navbar-inner
         .container

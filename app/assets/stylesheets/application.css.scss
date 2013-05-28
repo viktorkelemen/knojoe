@@ -12,6 +12,7 @@
  *= require bootstrap_and_overrides
  *= require chats
  *= require users
+ *= require index_static
  */
 
 @import 'dashboard';
@@ -23,8 +24,4 @@
 
 .logo {
   height: 20px;
-}
-
-body {
-  padding-top: 60px;
 }
