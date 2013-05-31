@@ -1,15 +1,46 @@
 .dashboard {
+
+  $border_color: #eaeaea;
+  $full_padding: 12px;
+
+  clear: both;
+
   .msgboard {
     overflow: auto;
     width: 100%;
-    height: 200px;
-    border: 1px solid #CCC;
-    padding: 10px;
+    margin: auto;
   }
 
   .msg {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
+    position: relative;
+    border-bottom: 1px solid $border_color;
+    padding: $full_padding 90px 6px $full_padding;
+  }
+
+  .msg:first-child {
+    border-top: 1px solid $border_color;
+  }
+
+  .pickup {
+    position: absolute;
+    right: $full_padding;
+    top: 15px;
   }
 }
+
+@media (max-width: 340px) {
+  .dashboard {
+    .msg {
+      padding-right: 12px;
+    }
+
+    .pickup {
+      position: static;
+      display: block;
+      margin-top: 6px;
+      width: 40px;
+    }
+  }
+}
+
 

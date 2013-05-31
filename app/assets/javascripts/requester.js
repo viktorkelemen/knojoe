@@ -1,9 +1,10 @@
 function updateTimerUI(value) {
-  var w = Math.round(value * 120);
-  if (w > 120) {
-    w = 120;
+  // the value is between 0 and 1
+  var h = Math.round(value * 25);
+  if (h > 25) {
+    h = 25;
   }
-  $('.timer_container').find('.timer').css({ width: w + 'px' }).removeClass('hidden');
+  $('.timer_container').find('.timer').css({ height: h + 'px' }).removeClass('hidden');
 }
 
 $( function () {

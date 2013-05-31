@@ -1,8 +1,6 @@
-.row
-  .span6.offset3
-    = render 'chat'
+= render 'chat'
 
-    = link_to 'Thank you and exit', '#', class: 'btn btn-danger finish_button'
+= link_to 'Thank you and exit', '#', class: 'btn btn-danger finish_button'
 
 :javascript
   var chatTimerOffset = #{ @chat.started_offset(-1) };
