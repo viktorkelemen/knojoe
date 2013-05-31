@@ -25,3 +25,23 @@
 .logo {
   height: 20px;
 }
+
+footer {
+  margin-top: 50px;
+
+  p {
+    color: #ddd;
+    text-align: center;
+    font-size: 0.9em;
+  }
+}
+
+#online_info {
+  color: #333;
+  font-size: 1.1em;
+}
+
+#available_member_count {
+  font-size: 1.2em;
+  color: #65a830;
+}

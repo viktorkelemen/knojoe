@@ -3,6 +3,11 @@
   = "(%s)" % num if num > 0
   Knojoe
 
+= content_for :footer do
+  %p#online_info<
+    Currently available member(s):
+    %strong#available_member_count ...
+
 .dashboard
   %h2 Dashboard
   .msgboard
@@ -51,13 +56,28 @@
 
   var presenceChannel = pusher.subscribe("presence-home");
 
-  presenceChannel.bind('pusher:subscription_succeeded', function() {
+  presenceChannel.bind('pusher:subscription_succeeded', function(members) {
     $('.msgboard .msg .pickup').each(function(index, link) {
       $(link).setOrUpdateParam('socket_id', pusher.connection.socket_id);
     });
+
+    updateOnlineMemberCount(presenceChannel.members.count)
   });
+
+  var updateOnlineMemberCount = function() {
+    var memberCount = presenceChannel.members.count;
+    $('#available_member_count').text(presenceChannel.members.count);
+  }
 
 - if current_user.available_for_push_notification?
   :javascript
     presenceChannel.bind('chat_start_event', addMsg);
     presenceChannel.bind('chat_pickedup_event', addMsg);
+
+    presenceChannel.bind('pusher:member_added', function(member) {
+      updateOnlineMemberCount();
+    });
+
+    presenceChannel.bind('pusher:member_removed', function(member) {
+      updateOnlineMemberCount();
+    });

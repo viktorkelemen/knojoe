@@ -54,6 +54,8 @@
       = yield
 
       %footer
+        - if content_for?(:footer)
+          = content_for(:footer)
         %p &copy; Knojoe 2012
 
   = audio_tag("/assets/bell-sound.mp3", preload: 'auto', id: 'notification_sound')
