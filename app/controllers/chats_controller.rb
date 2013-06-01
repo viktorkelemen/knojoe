@@ -42,9 +42,9 @@ class ChatsController < ApplicationController
 
     end
 
-    #if @chat.finished_at
-      #render :text => "too late"
-    #end
+    if @chat.finished?
+      redirect_to review_chat_path, alert: t('chats.chat_finished')
+    end
 
     @chat.assign_responder(current_user)
     @messages = @chat.messages
