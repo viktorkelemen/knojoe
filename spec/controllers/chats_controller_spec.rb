@@ -116,6 +116,42 @@ describe ChatsController do
 
       expect(response).to redirect_to(review_chat_path(chat))
     end
+  end
 
+  describe '#connection_timeout' do
+    let!(:chat) { create(:chat) }
+
+    before do
+      login
+      Pusher.stub_chain(:[], :trigger)
+    end
+
+    it 'sets chat as finished' do
+      post :connection_timeout, id: chat
+
+      expect(chat.reload).to be_finished
+    end
+
+    it 'creates a system message telling no one picked up this chat' do
+      post :connection_timeout, id: chat
+
+      message = chat.messages.last
+      expect(message.status).to eq('system')
+      expect(message.content).to eq('No one picked up.')
+    end
+
+    it 'triggers chat_status_event timeout type message' do
+      Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_status_event', message: 'No one picked up.', type: 'timeout')
+
+      post :connection_timeout, id: chat
+    end
+
+    it 'returns :bad_request if chat already finished' do
+      Chat.any_instance.should_receive(:finished?).and_return(true)
+
+      post :connection_timeout, id: chat
+
+      expect(response).to be_bad_request
+    end
   end
 end
