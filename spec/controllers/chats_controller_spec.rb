@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe ChatsController do
+  before do
+    Pusher.stub_chain(:[], :trigger)
+  end
+
   describe '#create' do
     let(:user) { create(:user) }
     let(:chat) { Chat.last }
@@ -8,7 +12,6 @@ describe ChatsController do
 
     before do
       login(user)
-      Pusher.stub_chain(:[], :trigger)
     end
 
     it 'creates chat object' do
@@ -59,7 +62,6 @@ describe ChatsController do
 
     before do
       login(responder)
-      Pusher.stub_chain(:[], :trigger)
     end
 
     it 'assigns responder to the chat' do
@@ -123,7 +125,6 @@ describe ChatsController do
 
     before do
       login
-      Pusher.stub_chain(:[], :trigger)
     end
 
     it 'sets chat as finished' do
