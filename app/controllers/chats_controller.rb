@@ -8,6 +8,7 @@ class ChatsController < ApplicationController
   def create
     @chat = Chat.new(params[:chat])
     @chat.requester = current_user
+    @chat.messages.first.author = current_user
 
     if @chat.save
       Pusher["presence-home"].trigger('chat_start_event', pusher_data, params[:socket_id])
