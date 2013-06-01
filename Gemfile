@@ -13,19 +13,22 @@ gem 'pusher'
 gem 'delayed_job_active_record'
 gem 'figaro'
 
+group :test, :development do
+  gem 'sqlite3'
+  gem 'pry-remote'
+  gem 'pry-rails'
+  gem 'pry-nav'
+  gem 'rspec-rails'
+end
+
 group :development do
   gem 'awesome_print'
   gem 'quiet_assets'
   gem 'letter_opener'
 end
 
-group :test, :development do
-  gem 'sqlite3'
-  gem 'pry-remote'
-  gem 'pry-rails'
-  gem 'pry-nav'
+group :test do
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'launchy'
