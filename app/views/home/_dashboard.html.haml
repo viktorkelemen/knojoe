@@ -15,7 +15,7 @@
       .msg{data: { chat_id: chat.id} }
         .row-fluid
           .span10
-            %p= chat.messages.first.try(:content)
+            %p= chat.first_message.try(:content)
             = timeago(chat.created_at)
           .span2
             - if chat.started? || chat.finished?
