@@ -38,4 +38,6 @@ RSpec.configure do |config|
 
   # use factory girl shortcuts
   config.include FactoryGirl::Syntax::Methods
+
+  config.include UserMacros::Controller, type: :controller
 end
