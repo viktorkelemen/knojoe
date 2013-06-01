@@ -1,5 +1,7 @@
 .home_controller {
   &.index_static_action {
+    padding-top: 0;
+
     .navbar {
       display: none;
     }
