@@ -4,8 +4,8 @@ Chat log
 ========
 
 <% @chat.messages.each do |message| %>
-<%= message.author == @user ? 'Me: ' : 'Villager: ' %><%= message.content %>
+<%= message.author == @user ? 'Me: ' : 'Responder: ' %><%= message.content %>
 <% end %>
 
 Check on the web:
-<%= review_chat_url(@chat) %>
+<%= review_chat_url(@chat.id) %>
