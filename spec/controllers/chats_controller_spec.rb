@@ -46,7 +46,7 @@ describe ChatsController do
       Pusher['presence-home'].should_receive(:trigger).with('chat_start_event', {
         :chat_id=>1,
         :chat_path=>responder_chat_path(1),
-        :message=>"#1 - hello",
+        :message=>"hello",
         :timestamp=> Time.now.strftime("%H:%M"),
         :type=>"new",
         :active=>1

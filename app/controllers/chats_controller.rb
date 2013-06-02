@@ -35,7 +35,7 @@ class ChatsController < ApplicationController
       # sending all other responders that someone picked it up
       Pusher["presence-home"].trigger('chat_pickedup_event', {
         chat_id: @chat.id,
-        message: "#{ @chat.chat.first_message.try(:content) } - picked up",
+        message: "#{ @chat.first_message.try(:content) } - picked up",
         timestamp: Time.now.strftime("%H:%M"),
         type: 'pickedup'
       }, params[:socket_id])
@@ -103,7 +103,7 @@ class ChatsController < ApplicationController
     {
       chat_id:      @chat.id,
       chat_path:    responder_chat_path(@chat),
-      message:      @chat.chat.first_message.try(:content),
+      message:      @chat.first_message.try(:content),
       timestamp:    @chat.created_at.strftime("%H:%M"),
       type:         'new',
       active:       Chat.num_of_active_chats
