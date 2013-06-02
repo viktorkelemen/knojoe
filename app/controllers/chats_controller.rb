@@ -8,6 +8,7 @@ class ChatsController < ApplicationController
   def create
     @chat = Chat.new(params[:chat])
     @chat.requester = current_user
+    @chat.messages.first.author = current_user
 
     if @chat.save
       Pusher["presence-home"].trigger('chat_start_event', pusher_data, params[:socket_id])
@@ -34,16 +35,16 @@ class ChatsController < ApplicationController
       # sending all other responders that someone picked it up
       Pusher["presence-home"].trigger('chat_pickedup_event', {
         chat_id: @chat.id,
-        message: "#{ @chat.chat.first_message.try(:content) } - picked up",
+        message: "#{ @chat.first_message.try(:content) } - picked up",
         timestamp: Time.now.strftime("%H:%M"),
         type: 'pickedup'
       }, params[:socket_id])
 
     end
 
-    #if @chat.finished_at
-      #render :text => "too late"
-    #end
+    if @chat.finished?
+      redirect_to review_chat_path, alert: t('chats.chat_finished')
+    end
 
     @chat.assign_responder(current_user)
     @messages = @chat.messages
@@ -102,7 +103,7 @@ class ChatsController < ApplicationController
     {
       chat_id:      @chat.id,
       chat_path:    responder_chat_path(@chat),
-      message:      @chat.chat.first_message.try(:content),
+      message:      @chat.first_message.try(:content),
       timestamp:    @chat.created_at.strftime("%H:%M"),
       type:         'new',
       active:       Chat.num_of_active_chats
