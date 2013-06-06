@@ -1,0 +1,11 @@
+@media (max-width: 460px) {
+  // narrow down the horizontal padding
+  .navbar .nav > li > a {
+    padding: 10px 5px;
+  }
+
+  // hide the user name
+  .nav.pull-right .user_name {
+    display: none;
+  }
+}

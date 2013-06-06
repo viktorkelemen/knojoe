@@ -13,6 +13,7 @@
  *= require chats
  *= require users
  *= require index_static
+ *= require_tree ./responsive
  */
 
 @import 'dashboard';
