@@ -101,6 +101,14 @@ describe ChatsController do
       expect(flash[:alert]).to eq(I18n.t('chats.responder_exists'))
     end
 
+    it 'redirects back to top page if requester tries to pick his/her own question' do
+      login(chat.requester)
+
+      get :responder, id: chat
+
+      expect(response).to redirect_to(root_path)
+    end
+
     it 'shows chat already finished message if it does' do
       Chat.any_instance.should_receive(:started?).and_return(true)
       Chat.any_instance.should_receive(:finished?).and_return(true)

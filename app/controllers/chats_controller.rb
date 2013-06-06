@@ -23,6 +23,9 @@ class ChatsController < ApplicationController
     if @chat.responder && current_user != @chat.responder
       redirect_to root_path, alert: t('chats.responder_exists')
       return
+    elsif current_user == @chat.requester
+      redirect_to root_path
+      return
     end
 
     # if responder joined
@@ -102,6 +105,7 @@ class ChatsController < ApplicationController
   def pusher_data
     {
       chat_id:      @chat.id,
+      requester_id: @chat.requester.id,
       chat_path:    responder_chat_path(@chat),
       message:      @chat.first_message.try(:content),
       timestamp:    @chat.created_at.strftime("%H:%M"),
