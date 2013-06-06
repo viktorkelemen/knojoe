@@ -18,13 +18,9 @@
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
           = link_to root_url(subdomain: false), class: 'brand' do
             = image_tag 'knojoe_logo_09.png', alt: 'Knojoe', class: 'logo'
-          .container.nav-collapse
+          .container
             %ul.nav
               %li= link_to "Ranking", users_path
               - if signed_in?
@@ -41,7 +37,7 @@
                 %li.dropdown
                   = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
                     = image_tag current_user.image, size: '24x24', class: 'avatar_tiny'
-                    = current_user.name
+                    %span.user_name= current_user.name
                   %ul.dropdown-menu
                     %li= link_to 'My page', current_user
                     %li= link_to 'Edit Page', '#'
