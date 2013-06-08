@@ -102,18 +102,20 @@
     e.preventDefault();
 
     var thankyouMessage = prompt('Please say thank you to the fellow knojoer');
-    // after guest enter the 'thank you' message
-    $.ajax({
-      url: "#{finish_chat_path(@chat)}",
-      type: "post",
-      data: { message: thankyouMessage },
-      success: function() {
-        window.location = "#{review_chat_path(@chat)}";
-      },
-      error: function(error) {
-        console.error(error);
-      }
-    });
+
+    if (thankyouMessage !== null) {
+      $.ajax({
+        url: "#{finish_chat_path(@chat)}",
+        type: "post",
+        data: { message: thankyouMessage },
+        success: function() {
+          window.location = "#{review_chat_path(@chat)}";
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
+    }
   });
 
   jQuery(function($) {
