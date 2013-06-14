@@ -3,6 +3,8 @@
 
 en:
   chats:
+    responder_exists: "Oops, someone already picked up that question."
+
   chat_mailer:
     send_conversation:
       subject: '[Knojoe] You conversation history'
