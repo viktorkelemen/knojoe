@@ -1,3 +1,4 @@
 = simple_form_for [@chat, Message.new], remote: true, html: {class: 'message_form form-inline'} do |f|
-  = f.input_field :content, as: :string, placeholder: 'message...', class: 'span5', disabled: @chat.finished?
+  .message_input_container
+    = f.input_field :content, as: :string, placeholder: 'message...', class: 'message_input', disabled: @chat.finished?
   = f.button :submit, class: 'btn-primary send_btn', disabled: @chat.finished?, data: { disable_with: 'Sending' }
