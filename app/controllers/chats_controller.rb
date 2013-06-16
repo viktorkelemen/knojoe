@@ -8,14 +8,14 @@ class ChatsController < ApplicationController
   def create
     @chat = Chat.new(params[:chat])
     @chat.requester = current_user
-    @chat.messages.first.author = current_user
+    @chat.messages.first.author = current_user unless @chat.messages.empty?
 
     if @chat.save
       Pusher["presence-home"].trigger('chat_start_event', pusher_data, params[:socket_id])
       @chat.messages.create(status: 'system', content: 'Waiting for the responder...')
       redirect_to requester_chat_path(@chat)
     else
-      render 'new'
+      redirect_to ask_path, alert: 'Please input your question.'
     end
   end
 

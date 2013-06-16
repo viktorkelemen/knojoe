@@ -8,7 +8,7 @@ class Chat < ActiveRecord::Base
 
   accepts_nested_attributes_for :messages, reject_if: :all_blank
 
-  validates :requester, presence: true
+  validates :requester, :messages, presence: true
 
   scope :recent, ->(limit = 5) { order('created_at DESC').limit(limit) }
 
