@@ -1,7 +1,23 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  rescue_from Exception, :with => :render_500 if Rails.env.production?
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+
+  before_filter :set_user_id
+  def set_user_id
+    session[:user_id] = User.first.id
+  end
+
   protected
+
+  def render_404
+    render :template => 'errors/404', :layout => 'fullscreen_errors', :status => 404
+  end
+
+  def render_500
+    render :template => 'errors/500', :layout => 'fullscreen_errors', :status => 500
+  end
 
   def current_user
     @current_user ||= User.find_by_id(session[:user_id])

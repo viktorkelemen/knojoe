@@ -1,0 +1,28 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      = link_to root_url(subdomain: false), class: 'brand' do
+        = image_tag 'knojoe_logo_09.png', alt: 'Knojoe', class: 'logo'
+      .container
+        %ul.nav
+          %li= link_to "Ranking", users_path
+          - if signed_in?
+            %li
+              = link_to asked_user_path(current_user), rel: 'tooltip', title: 'Asked questions', data: { placement: 'bottom' } do
+                %i.icon-bullhorn
+                %strong #{ current_user.asked_questions.size }
+            %li
+              = link_to helped_user_path(current_user), rel: 'tooltip', title: 'Helped questions', data: { placement: 'bottom' } do
+                %i.icon-heart
+                %strong #{ current_user.helped_questions.size }
+        %ul.nav.pull-right
+          - if signed_in?
+            %li.dropdown
+              = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+                = image_tag current_user.image, size: '24x24', class: 'avatar_tiny'
+                %span.user_name= current_user.name
+              %ul.dropdown-menu
+                %li= link_to 'My page', current_user
+                %li= link_to 'Sign out', logout_path
+          - else
+            %li= link_to "Sign in", login_path
