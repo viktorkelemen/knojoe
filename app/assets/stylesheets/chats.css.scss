@@ -1,11 +1,3 @@
-.me_msg {
-  text-align: right;
-}
-
-.status_msg {
-  color: gray;
-}
-
 #messages {
   overflow: auto;
   border: 1px solid #eaeaea;
@@ -18,6 +10,18 @@
 
 
 .message {
+  clear: both;
+  max-width: 76%;
+
+  &.me_msg {
+    float: right;
+  }
+
+  &.status_msg {
+    color: gray;
+    max-width: 100%;
+    text-align: center;
+  }
 
   .like_button {
     display: block;
@@ -35,6 +39,19 @@
       display: block;
     }
   }
+
+  abbr.time {
+    color: #bfbfbf;
+    font-size: 11px;
+    display: block;
+  }
+
+  &.me_msg {
+    abbr.time {
+      text-align: right;
+    }
+  }
+
 }
 
 .message_form {
