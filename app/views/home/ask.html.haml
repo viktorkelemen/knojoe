@@ -1,10 +1,8 @@
-.row
-  .span4
-    = simple_form_for @chat do |f|
-      = hidden_field_tag(:socket_id)
-      = f.simple_fields_for :messages do |message_form|
-        = message_form.input :content, as: :text,
-          input_html: { placeholder: "What's your question?", class: 'initial_question_input', rows: 5 },
-          label: false,
-          required: true
-      = f.button :submit, 'Knojoe it', class: 'btn-primary btn-block'
+= simple_form_for @chat do |f|
+  = hidden_field_tag(:socket_id)
+  = f.simple_fields_for :messages do |message_form|
+    = message_form.input :content, as: :text,
+      input_html: { placeholder: "What's your question?", class: 'initial_question_input', rows: 5 },
+      label: false,
+      required: true
+  = f.button :submit, 'Knojoe it', class: 'btn-primary'
