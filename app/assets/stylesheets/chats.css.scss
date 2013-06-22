@@ -38,6 +38,8 @@
 }
 
 .message_form {
+  $popup_border: 1px solid #808080;
+
   position: relative;
   width: 100%;
   height: 50px;
@@ -46,16 +48,49 @@
   .message_input_container {
     position: absolute;
     left: 0;
-    right: 80px;
+    right: 110px;
 
     .message_input {
       width: 100%;
     }
   }
 
+  .emoji_btn {
+    position: absolute;
+    top: 4px;
+    right: 60px;
+    background: url(/assets/emoji_btn.png) top left no-repeat;
+    margin-right: .5em;
+    width: 22px;
+    height: 22px;
+    opacity: 0.6;
+  }
+
+  .emoji_btn.active {
+    opacity: 1;
+    border: $popup_border;
+    border-top: 0;
+  }
+
+  .emoji_popup {
+    background: #fff;
+    position: absolute;
+    bottom: 46px;
+    right: 67px;
+    border: $popup_border;
+    border-bottom: 0;
+    z-index: 100;
+    width: 22px;
+
+    .emoji {
+      cursor: pointer;
+    }
+  }
+
   .send_btn {
     position: absolute;
     right: 0;
+    width: 59px;
   }
 
 }
