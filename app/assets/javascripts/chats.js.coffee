@@ -17,7 +17,50 @@ notifyTyping = (chatId, msg) ->
       console.error('error', arguments)
   })
 
+
+insertAt = (src, index, str) ->
+  src.substr(0, index) + str + src.substr(index)
+
+
+hidePopup = (popup, btn) ->
+  popup.addClass('hidden')
+  btn.removeClass('active')
+
+showPopup = (popup, btn) ->
+  popup.removeClass('hidden')
+  btn.addClass('active')
+
+togglePopup = (popup, btn) ->
+  if popup.hasClass('hidden')
+    showPopup(popup, btn)
+  else
+    hidePopup(popup, btn)
+
 $ ->
+
+  message_form = $('.message_form')
+  emoji_popup = message_form.find('.emoji_popup')
+  message_input = message_form.find('.message_input')
+  emoji_btn = message_form.find('.emoji_btn')
+
+  emoji_btn.click (e) ->
+    togglePopup(emoji_popup, emoji_btn)
+    e.preventDefault()
+    e.stopPropagation()
+
+  emoji_popup.on 'click', '.emoji', (e) ->
+    caret = message_input.caret()
+    msg = message_input.val()
+    emoji_txt = " #{ $(this).data('value') } "
+    message_input.val(insertAt(msg, caret, emoji_txt))
+    message_input.focus().caret(caret + emoji_txt.length)
+    hidePopup(emoji_popup, emoji_btn)
+
+  message_input.focus () ->
+    hidePopup(emoji_popup, emoji_btn)
+
+
+
   $('.review_mode').on 'ajax:success', (event, data) ->
     if data.message_id
       $("#message_#{data.message_id}").find(".like_button, .unlike_button").toggle()

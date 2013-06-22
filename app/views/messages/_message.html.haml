@@ -7,7 +7,7 @@
 - if message.status == 'user'
   .message{class: ('liked' if message.liked?), id: dom_id(message)}
     %p{class: ('me_msg' if check_role && current_user == message.author)}
-      = message.content
+      = parse_emoji(message.content)
       %br
       = message.created_at.strftime("%Y/%m/%d %H:%M")
       - if mode == 'review'
@@ -15,4 +15,4 @@
         = link_to 'Like', like_message_path(message), class: 'like_button like_status_css', method: :post, remote: true
         = link_to 'Unlike', unlike_message_path(message), class: 'unlike_button', method: :delete, remote: true
 - else
-  %p.status_msg= message.content
+  %p.status_msg= parse_emoji(message.content)

@@ -1,4 +1,10 @@
 = simple_form_for [@chat, Message.new], remote: true, html: {class: 'message_form form-inline'} do |f|
   .message_input_container
     = f.input_field :content, as: :string, placeholder: 'message...', class: 'message_input', disabled: @chat.finished?
-  = f.button :submit, class: 'btn-primary send_btn', disabled: @chat.finished?, data: { disable_with: 'Sending' }
+  = link_to '', '#', class: 'emoji_btn'
+  .emoji_popup.hidden
+    %span.smile.emoji{ data: { value: ':)' } }
+    %span.laugh.emoji{ data: { value: ':D' } }
+    %span.tongue.emoji{ data: { value: ':P' } }
+    %span.worried.emoji{ data: { value: ':(' } }
+  = f.button :submit, class: 'btn-primary send_btn', disabled: @chat.finished?, data: { disable_with: '...' }
