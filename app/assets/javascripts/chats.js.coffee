@@ -84,7 +84,6 @@ $ ->
       else
         $("#typing_msg").remove()
 
-      console.log('chat typing event', data)
     )
 
   $("#messages").bind "DOMSubtreeModified", ->
