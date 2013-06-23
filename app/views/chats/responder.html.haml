@@ -49,7 +49,7 @@
       $.ajax({
         url: "#{finish_chat_path(@chat)}",
         type: "post",
-        data: { message: 'Responder exited..' },
+        data: { message: 'Responder exited.' },
         success: function() {
           window.location = "/";
         },

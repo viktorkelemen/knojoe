@@ -30,7 +30,7 @@ describe ChatsController do
       post :create, chat: params
 
       message = chat.messages.last
-      expect(message.content).to eq('Waiting for the responder...')
+      expect(message.content).to eq('Waiting for the responder.')
       expect(message.status).to eq('system')
     end
 
@@ -80,12 +80,12 @@ describe ChatsController do
       get :responder, id: chat
 
       message = chat.messages.last
-      expect(message.content).to eq('responder joined.')
+      expect(message.content).to eq('Responder joined.')
       expect(message.status).to eq('system')
     end
 
     it 'triggers chat_pickup_event' do
-      Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_status_event', message: 'responder joined', type: 'join')
+      Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_status_event', message: 'Responder joined.', type: 'join')
       Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_start_event', anything)
       Pusher['presence-home'].should_receive(:trigger).with('chat_pickedup_event', anything, '12345')
 
