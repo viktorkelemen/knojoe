@@ -60,6 +60,14 @@ $ ->
     hidePopup(emoji_popup, emoji_btn)
 
 
+  message_form.submit (event) ->
+    if $(this).find('.message_input').val().length == 0
+      event.preventDefault()
+      event.stopPropagation()
+
+  message_form.bind 'ajax:success', (event, data) ->
+    # reset the form
+    this.reset()
 
   $('.review_mode').on 'ajax:success', (event, data) ->
     if data.message_id
