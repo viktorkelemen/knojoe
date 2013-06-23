@@ -51,9 +51,20 @@
       text-align: right;
     }
   }
-
 }
 
+
+.chat_not_started {
+  background: url(/assets/progress.gif) 50% 60% no-repeat;
+
+  .message_form {
+    display: none;
+  }
+
+  .finish_button {
+    display: none;
+  }
+}
 .message_form {
   $popup_border: 1px solid #808080;
 
