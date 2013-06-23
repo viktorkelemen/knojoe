@@ -95,8 +95,12 @@ class ChatsController < ApplicationController
 
   def finish
     @chat.finish
-    @chat.messages.create(status: 'system', content: params[:message])
-    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: params[:message], type: 'finish' })
+    message = @chat.messages.create(status: 'system', content: params[:message])
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', {
+      message: message.content,
+      html: render_to_string(partial: '/messages/message', locals: { message: message, check_role: false }),
+      type: 'finish'
+    })
     head :ok
   end
 
