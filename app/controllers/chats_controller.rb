@@ -69,7 +69,12 @@ class ChatsController < ApplicationController
     # after requester send the request, and no responder respond in time
     message = @chat.messages.create!(status: 'system', content: 'No one picked up.')
     @chat.finish
-    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: message.content, type: 'timeout'})
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', {
+      message: message.content,
+      html: render_to_string(partial: '/messages/message', locals: { message: message, check_role: false }),
+      type: 'timeout'
+    })
+
     head :ok
   end
 
