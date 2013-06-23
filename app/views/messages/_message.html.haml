@@ -6,14 +6,12 @@
 
 - if message.status == 'user'
   .message{class: "clearfix #{ 'liked' if message.liked? } #{ 'me_msg' if check_role && current_user == message.author }", id: dom_id(message)}
-    %p
-      = parse_emoji(message.content)
-      %abbr.time{ data: { utime: message.created_at } }
-        = message.created_at.strftime("%H:%M")
-      - if mode == 'review'
-        %br
-        = link_to 'Like', like_message_path(message), class: 'like_button like_status_css', method: :post, remote: true
-        = link_to 'Unlike', unlike_message_path(message), class: 'unlike_button', method: :delete, remote: true
+    %p= parse_emoji(message.content)
+    %abbr.time{ data: { utime: message.created_at } }
+      = message.created_at.strftime("%H:%M")
+    - if mode == 'review'
+      = link_to 'Like', like_message_path(message), class: 'like_button like_status_css', method: :post, remote: true
+      = link_to 'Unlike', unlike_message_path(message), class: 'unlike_button', method: :delete, remote: true
 - else
   .message.status_msg
     %p= parse_emoji(message.content)
