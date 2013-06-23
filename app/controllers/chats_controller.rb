@@ -31,8 +31,14 @@ class ChatsController < ApplicationController
     # if responder joined
     unless @chat.started?
       @chat.start
-      @chat.messages.create(status: 'system', content: 'responder joined.')
-      Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: 'responder joined', type: 'join'})
+      message = @chat.messages.create(status: 'system', content: 'responder joined.')
+
+      Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', {
+        message: message.content,
+        html: render_to_string(partial: '/messages/message', locals: { message: message, check_role: false }),
+        type: 'join'
+      })
+
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_start_event', @chat.started_at.to_i);
 
       # sending all other responders that someone picked it up
