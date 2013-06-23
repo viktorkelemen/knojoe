@@ -1,4 +1,4 @@
-%div{ class: "chat_status #{ 'chat_not_started' unless @chat.finished? || @chat.started? }" }
+%div{ class: "chat_status #{ 'waiting' unless @chat.finished? || @chat.started? } #{ 'not_started' unless @chat.started? }" }
   = render 'chat'
   = link_to 'Thank you and exit', '#', class: 'btn btn-danger finish_button'
 
@@ -51,6 +51,10 @@
   channel.bind('chat_status_event', function(data) {
     if (data && data.html) {
       $('#messages').append(data.html);
+
+      if (data.type == 'timeout') {
+        $('.chat_status').removeClass('waiting');
+      }
     }
 
     // FIX: this should not be here
@@ -63,7 +67,7 @@
 
   channel.bind('chat_start_event', function(data) {
     // chat started
-    $('.chat_status').removeClass('chat_not_started');
+    $('.chat_status').removeClass('waiting not_started');
     initTimer(0);
   });
 

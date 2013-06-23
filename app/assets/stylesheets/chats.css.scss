@@ -54,9 +54,7 @@
 }
 
 
-.chat_not_started {
-  background: url(/assets/progress.gif) 50% 60% no-repeat;
-
+.chat_status.not_started {
   .message_form {
     display: none;
   }
@@ -65,6 +63,11 @@
     display: none;
   }
 }
+
+.chat_status.waiting {
+  background: url(/assets/progress.gif) 50% 60% no-repeat;
+}
+
 .message_form {
   $popup_border: 1px solid #808080;
 
