@@ -12,6 +12,12 @@
 .message {
   clear: both;
   max-width: 76%;
+  margin-bottom: 12px;
+
+  p {
+    margin: 0;
+    display: block;
+  }
 
   &.me_msg {
     float: right;
@@ -48,6 +54,9 @@
 
   &.me_msg {
     abbr.time {
+      text-align: right;
+    }
+    .like_button, .unlike_button {
       text-align: right;
     }
   }
