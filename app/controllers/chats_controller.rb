@@ -12,7 +12,7 @@ class ChatsController < ApplicationController
 
     if @chat.save
       Pusher["presence-home"].trigger('chat_start_event', pusher_data, params[:socket_id])
-      @chat.messages.create(status: 'system', content: 'Waiting for the responder...')
+      @chat.messages.create(status: 'system', content: 'Waiting for the responder.')
       redirect_to requester_chat_path(@chat)
     else
       redirect_to ask_path, alert: 'Please input your question.'
@@ -31,7 +31,7 @@ class ChatsController < ApplicationController
     # if responder joined
     unless @chat.started?
       @chat.start
-      message = @chat.messages.create(status: 'system', content: 'responder joined.')
+      message = @chat.messages.create(status: 'system', content: 'Responder joined.')
 
       Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', {
         message: message.content,
