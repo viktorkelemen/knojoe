@@ -53,8 +53,8 @@
 
   // Handling status events coming with pusher
   channel.bind('chat_status_event', function(data) {
-    if (data && data.message) {
-      insertStatusMessage(data.message)
+    if (data && data.html) {
+      $('#messages').append(data.html);
     }
 
     // FIX: this should not be here
@@ -68,11 +68,6 @@
   channel.bind('chat_start_event', function(data) {
     initTimer(0);
   });
-
-  function insertStatusMessage(message) {
-    $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
-  }
-
 
   function sendConnectionTimeup() {
     $.ajax({

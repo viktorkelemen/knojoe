@@ -68,8 +68,17 @@ class ChatsController < ApplicationController
   end
 
   def chat_timeout
-    @chat.messages.create(status: 'system', content: 'Time is up, requester please press the thank you button and exit.')
-    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', { message: 'Time is up, requester please press the thank you button and exit.', type: 'timeout' })
+    message = @chat.messages.create(
+      status: 'system',
+      content: 'Time is up, requester please press the thank you button and exit.'
+    )
+
+    Pusher["channel_chat_#{@chat.id}"].trigger('chat_status_event', {
+      message: message.content,
+      html:  render_to_string(partial: '/messages/message', locals: { message: message, check_role: false }),
+      type: 'timeout'
+    })
+
     head :ok
   end
 

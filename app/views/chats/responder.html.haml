@@ -16,8 +16,8 @@
   });
 
   channel.bind('chat_status_event', function(data) {
-    if (data && data.message) {
-      insertStatusMessage(data.message);
+    if (data && data.html) {
+      $('#messages').append(data.html);
 
       if (data.type === 'finish') {
         $('#message_content, .send_btn').attr('disabled','disabled')
@@ -36,10 +36,6 @@
       updateTimerUI(value);
       console.log('finished');
     });
-  }
-
-  function insertStatusMessage(message) {
-    $('<p>' + message + '</p>').addClass('status_msg').appendTo('#messages');
   }
 
   jQuery(function($) {
