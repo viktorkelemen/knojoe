@@ -47,7 +47,8 @@ describe ChatsController do
         :chat_id=>1,
         :chat_path=>responder_chat_path(1),
         :message=>"hello",
-        :timestamp=> Time.now.strftime("%H:%M"),
+        :requester_id=>1,
+        :timestamp=> Time.zone.now.strftime("%H:%M"),
         :type=>"new",
         :active=>1
       }, nil)

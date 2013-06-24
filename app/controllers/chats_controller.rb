@@ -39,7 +39,7 @@ class ChatsController < ApplicationController
       Pusher["presence-home"].trigger('chat_pickedup_event', {
         chat_id: @chat.id,
         message: "#{ @chat.first_message.try(:content) } - picked up",
-        timestamp: Time.now.strftime("%H:%M"),
+        timestamp: Time.zone.now.strftime("%H:%M"),
         type: 'pickedup'
       }, params[:socket_id])
 

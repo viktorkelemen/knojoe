@@ -16,7 +16,7 @@ class Chat < ActiveRecord::Base
 
   def started_offset(default = -1)
     if started_at
-      (Time.now - started_at.to_i).to_i
+      (Time.zone.now - started_at.to_i).to_i
     else
       default
     end
@@ -27,7 +27,7 @@ class Chat < ActiveRecord::Base
   end
 
   def finish
-    self.finished_at = Time.now
+    self.finished_at = Time.zone.now
     save!
   end
 
@@ -36,7 +36,7 @@ class Chat < ActiveRecord::Base
   end
 
   def start
-    self.started_at = Time.now
+    self.started_at = Time.zone.now
     save!
   end
 
@@ -45,7 +45,7 @@ class Chat < ActiveRecord::Base
 
     connected = finished_at - started_at
     format = connected > 60 ? '%Mm %Ss' : '%Ss'
-    Time.at(connected).strftime(format)
+    Time.zone.at(connected).strftime(format)
   end
 
   def assign_responder(user)
