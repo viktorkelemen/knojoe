@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :set_timezone
+
   protected
 
   def current_user
@@ -22,5 +24,11 @@ class ApplicationController < ActionController::Base
       session[:return_to] = request.path
       redirect_to login_path, alert: 'You must be logged in to access this section.'
     end
+  end
+
+  private
+
+  def set_timezone
+    Time.zone = cookies["time_zone"]
   end
 end

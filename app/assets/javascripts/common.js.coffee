@@ -25,6 +25,8 @@ $(document).on('ui-new-question', (event, data) ->
 )
 
 $ ->
+  document.cookie = 'time_zone='+jstz.determine().name()+';';
+
   $("abbr.timeago").timeago()
 
   $("body").on("click", "a[disabled]", (event) ->
