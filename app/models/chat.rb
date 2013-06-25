@@ -3,7 +3,7 @@ class Chat < ActiveRecord::Base
 
   belongs_to :requester, foreign_key: :requester_id, class_name: 'User'
   belongs_to :responder, foreign_key: :responder_id, class_name: 'User'
-  has_many :messages
+  has_many :messages, order: 'messages.created_at ASC'
   has_one :first_message, class_name: 'Message', order: 'messages.created_at ASC'
 
   accepts_nested_attributes_for :messages, reject_if: :all_blank
