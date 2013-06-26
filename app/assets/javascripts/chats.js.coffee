@@ -68,8 +68,7 @@ $ ->
     this.reset()
 
   $('.review_mode').on 'ajax:success', (event, data) ->
-    #if data.message_id
-      $("#message_#{data.message_id}").toggleClass('liked')
+    $("#message_#{data.message_id}").toggleClass('liked')
 
   if $('.message_form').length > 0
     channel.bind('chat_typing_event', (data) ->
