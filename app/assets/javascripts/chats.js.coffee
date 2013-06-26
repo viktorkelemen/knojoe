@@ -11,8 +11,6 @@ notifyTyping = (chatId, msg) ->
       socket_id: pusher.connection.socket_id
     },
     type: 'post'
-    success: ->
-      console.log('typing success', arguments)
     error: ->
       console.error('error', arguments)
   })
