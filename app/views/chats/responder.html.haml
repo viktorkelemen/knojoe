@@ -11,6 +11,7 @@
       $(data.html).addClass('me_msg').appendTo('#messages');
     } else {
       $(data.html).appendTo('#messages');
+      removeTypingIndicator();
     }
 
   });
@@ -18,12 +19,17 @@
   channel.bind('chat_status_event', function(data) {
     if (data && data.html) {
       $('#messages').append(data.html);
+      removeTypingIndicator();
 
       if (data.type === 'finish') {
         $('#message_content, .send_btn').attr('disabled','disabled')
       }
     }
   });
+
+  function removeTypingIndicator() {
+    $('#typing_msg').remove();
+  }
 
   function initTimer(offset) {
     timer = K.Timer(offset);

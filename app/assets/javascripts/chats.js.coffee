@@ -72,15 +72,17 @@ $ ->
 
   if $('.message_form').length > 0
     channel.bind('chat_typing_event', (data) ->
+      typingMsg = $('#typing_msg')
       if (data == 'typing')
-        $('<p>', {
-          class: 'message'
-          id: 'typing_msg'
-        }).html('...').appendTo($("#messages"))
-
+        if typingMsg.length > 0
+          typingMsg.css('visibility','visible')
+        else
+          $('<p>', {
+            class: 'message'
+            id: 'typing_msg'
+          }).html('...').appendTo($("#messages"))
       else
-        $("#typing_msg").remove()
-
+        typingMsg.css('visibility','hidden')
     )
 
   $("#messages").bind "DOMSubtreeModified", ->
