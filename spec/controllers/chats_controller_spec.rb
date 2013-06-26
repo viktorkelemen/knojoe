@@ -80,13 +80,16 @@ describe ChatsController do
     it 'creates a system message telling responder just joined' do
       get :responder, id: chat
 
-      message = chat.messages.last
+      message = chat.reload.messages.last
       expect(message.content).to eq('Responder joined.')
       expect(message.status).to eq('system')
     end
 
     it 'triggers chat_pickup_event' do
-      Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_status_event', message: 'Responder joined.', type: 'join')
+      Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_status_event',
+        message: 'Responder joined.',
+        html: anything,
+        type: 'join')
       Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_start_event', anything)
       Pusher['presence-home'].should_receive(:trigger).with('chat_pickedup_event', anything, '12345')
 
@@ -145,13 +148,16 @@ describe ChatsController do
     it 'creates a system message telling no one picked up this chat' do
       post :connection_timeout, id: chat
 
-      message = chat.messages.last
+      message = chat.reload.messages.last
       expect(message.status).to eq('system')
       expect(message.content).to eq('No one picked up.')
     end
 
     it 'triggers chat_status_event timeout type message' do
-      Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_status_event', message: 'No one picked up.', type: 'timeout')
+      Pusher["channel_chat_#{chat.id}"].should_receive(:trigger).with('chat_status_event',
+        message: 'No one picked up.',
+        html: anything,
+        type: 'timeout')
 
       post :connection_timeout, id: chat
     end

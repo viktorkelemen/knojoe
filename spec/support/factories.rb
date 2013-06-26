@@ -7,8 +7,9 @@ FactoryGirl.define do
 
   factory :chat do
     requester
-    # started_at { Time.zone.now }
-    # messages { }
+    messages {
+      [create(:message, author: requester)]
+    }
   end
 
   factory :message do
