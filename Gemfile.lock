@@ -118,6 +118,7 @@ GEM
     mime-types (1.23)
     multi_json (1.7.3)
     multipart-post (1.2.0)
+    newrelic_rpm (3.6.4.122)
     nokogiri (1.5.5)
     oauth2 (0.8.0)
       faraday (~> 0.8)
@@ -251,6 +252,7 @@ DEPENDENCIES
   launchy
   less-rails
   letter_opener
+  newrelic_rpm
   omniauth-facebook
   pg
   pry-nav
