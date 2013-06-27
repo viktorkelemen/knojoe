@@ -3,3 +3,56 @@
     = link_to 'Ask a question', ask_path, class: 'btn btn-primary ask_btn'
   - if @recent_chats.size > 0
     = render 'dashboard'
+
+  .notification_setup_container
+    = label_tag 'notifications' do
+      = check_box_tag 'notifications'
+      Desktop Notifications
+
+:javascript
+  var storageKey = 'knojoe:browser-notifications';
+
+  // requests permission if necessary
+  function requestPermission() {
+    if (window.webkitNotifications.checkPermission() != 0) {
+      window.webkitNotifications.requestPermission();
+    }
+  }
+
+  function initNotificationButton() {
+
+    var val;
+
+    var btn = $('#notifications');
+
+    // not allowed, handle the expired permission
+    if (window.webkitNotifications.checkPermission() != 0) {
+      window.localStorage.removeItem(storageKey);
+    }
+
+    // initial
+    if (val = window.localStorage.getItem(storageKey)) {
+      if (val === 'on') {
+        btn.prop('checked', true);
+      }
+    } else {
+      btn.prop('checked', false);
+    }
+
+    btn.change( function (e) {
+      if (btn.prop('checked')) {
+        requestPermission();
+        window.localStorage.setItem(storageKey,'on');
+      } else {
+        window.localStorage.removeItem(storageKey);
+      }
+    });
+  }
+
+
+  $( function () {
+    if (window.webkitNotifications && window.localStorage) {
+      initNotificationButton();
+    }
+  });
+
