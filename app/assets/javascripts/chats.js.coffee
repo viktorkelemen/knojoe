@@ -1,6 +1,4 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+window.K = window.K || {};
 
 notifyTyping = (chatId, msg) ->
 
@@ -34,12 +32,26 @@ togglePopup = (popup, btn) ->
   else
     hidePopup(popup, btn)
 
+
+K.updateTimerUI = (value) ->
+  # the value is between 0 and 1
+  h = Math.round(value * 25)
+  h = 25 if (h > 25)
+
+  $('.timer_container')
+    .find('.timer')
+    .css({ height: h + 'px' })
+    .removeClass('hidden')
+
 $ ->
 
   message_form = $('.message_form')
   emoji_popup = message_form.find('.emoji_popup')
   message_input = message_form.find('.message_input')
   emoji_btn = message_form.find('.emoji_btn')
+
+  if message_form.length > 1
+    initTimer(chatTimerOffset) if chatTimerOffset != -1
 
   emoji_btn.click (e) ->
     togglePopup(emoji_popup, emoji_btn)

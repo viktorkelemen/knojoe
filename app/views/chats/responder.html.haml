@@ -1,3 +1,7 @@
+- content_for :head do
+  = javascript_include_tag 'timer'
+  = javascript_include_tag 'chats'
+
 = render 'chat'
 = link_to 'Exit', '#', id: 'exit_chat', class: 'btn btn-danger'
 
@@ -35,11 +39,11 @@
     timer = K.Timer(offset);
     timer.start();
     timer.promise().progress( function (value) {
-      updateTimerUI(value);
+      K.updateTimerUI(value);
      });
 
     timer.promise().done( function (value) {
-      updateTimerUI(value);
+      K.updateTimerUI(value);
     });
   }
 

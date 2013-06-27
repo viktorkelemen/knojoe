@@ -1,3 +1,7 @@
+- content_for :head do
+  = javascript_include_tag 'timer'
+  = javascript_include_tag 'chats'
+
 %div{ class: "chat_status #{ 'waiting' unless @chat.finished? || @chat.started? } #{ 'not_started' unless @chat.started? }" }
   = render 'chat'
   = link_to 'Thank you and exit', '#', class: 'btn btn-danger finish_button'
@@ -33,11 +37,11 @@
     timer = K.Timer(offset);
     timer.start();
     timer.promise().progress( function (value) {
-      updateTimerUI(value);
+      K.updateTimerUI(value);
      });
 
     timer.promise().done( function (value) {
-      updateTimerUI(value);
+      K.updateTimerUI(value);
     });
   }
   channel.bind('chat_event', function(data) {

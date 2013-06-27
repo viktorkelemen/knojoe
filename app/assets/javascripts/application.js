@@ -16,4 +16,5 @@
 //= require jstz.min
 //= require_tree ../../../lib/assets/javascripts
 //= require twitter/bootstrap
-//= require_tree .
+//= require pusher
+//= require common
