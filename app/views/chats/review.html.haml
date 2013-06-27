@@ -1,13 +1,10 @@
-.page-header
-  %h1 Review your conversation
+%h3 Review your conversation
 
-%h3 Conversation
 #messages.review_mode= render @messages, mode: 'review'
 
-%h3 Email me the chat log
+%h4 Email me the chat log
 = form_tag email_chat_path(@chat) do
   = email_field_tag :email, current_user.email
-  = submit_tag 'Send', class: 'btn btn-primary'
+  = submit_tag 'Send', class: 'btn'
 
-%h3 Permalink:
-%p= review_chat_url(@chat)
+= link_to 'Back', root_path, class: 'btn btn-primary'
