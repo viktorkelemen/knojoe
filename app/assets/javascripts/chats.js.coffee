@@ -34,13 +34,17 @@ togglePopup = (popup, btn) ->
 
 
 K.updateTimerUI = (value) ->
-  # the value is between 0 and 1
-  h = Math.round(value * 25)
-  h = 25 if (h > 25)
+  container = $('.timer_container')
 
-  $('.timer_container')
+  # the value is between 0 and 1
+  h = Math.round(value * 58)
+  if (h >= 58)
+    h = 58
+    container.addClass('warning')
+
+  container
     .find('.timer')
-    .css({ height: h + 'px' })
+    .css({ width: h + 'px' })
     .removeClass('hidden')
 
 $ ->

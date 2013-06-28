@@ -1,17 +1,21 @@
 .timer_container {
   position: relative;
-  width: 25px;
+  width: 59px;
   float: right;
-  height: 23px;
+  height: 25px;
   margin: 5px 0;
-  background: #000;
-  -webkit-mask-image: url(/assets/clock_icon.png);
-  padding-top: 2px;
+  margin-bottom: 10px;
+  background: url(/assets/clock_icon.png) left center no-repeat;
+  padding-left: 28px;
 
   .timer_frame {
     position: relative;
     width: 100%;
     height: 100%;
+    border: 1px solid #000;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
   }
 
   &.warning .timer_frame {
@@ -26,7 +30,7 @@
   position: absolute;
   bottom: 0;
   display: block;
-  background: #f00;
-  height: 0;
-  width: 100%;
+  background: #000;
+  height: 23px;
+  width: 0;
 }
