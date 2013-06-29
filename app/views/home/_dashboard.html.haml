@@ -54,7 +54,7 @@
         // notify other members in presence channel that someone else picked up a chat
         case 'pickedup':
           // disabled the button of a chat that pickedup by others
-          $('[data-chat-id=' + data.chat_id + ']').find('.btn').attr('disabled', 'disabled');
+          chatIsTaken(data);
           break;
       }
     }
@@ -76,7 +76,14 @@
   }
 
   var workerConnectionTimeoutHandler = function(data) {
-    $('[data-chat-id=' + data.chat_id + ']').find('.btn').attr('disabled', 'disabled');
+    chatIsTaken(data);
+  }
+
+  var chatIsTaken = function(data) {
+    var entry = $('[data-chat-id=' + data.chat_id + ']');
+    entry.find('.btn').remove();
+    var takenLabel = $('<span>').addClass('pickup label').text('Taken');
+    entry.append(takenLabel);
   }
 
 - if current_user.available_for_push_notification?
