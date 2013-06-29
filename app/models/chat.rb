@@ -14,6 +14,10 @@ class Chat < ActiveRecord::Base
 
   after_create :check_connection_timeout, :check_chat_timeout
 
+  def self.num_of_active_chats
+    where(started_at: nil, finished_at: nil).count
+  end
+
   def started_offset(default = -1)
     if started_at
       (Time.zone.now - started_at.to_i).to_i
@@ -53,6 +57,8 @@ class Chat < ActiveRecord::Base
     save!
   end
 
+  private
+
   def check_connection_timeout
     return if responder
 
@@ -69,8 +75,4 @@ class Chat < ActiveRecord::Base
     finish
   end
   handle_asynchronously :check_chat_timeout, run_at: Proc.new { 3.minutes.from_now }
-
-  def self.num_of_active_chats
-    where(started_at: nil, finished_at: nil).count
-  end
 end
