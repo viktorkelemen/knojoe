@@ -57,6 +57,9 @@ class Chat < ActiveRecord::Base
     return if responder
 
     finish
+    # use "worker_" prefix to indicate this event is supposed to be sent by a
+    # "worker" process, not from normal user interactions.
+    Pusher["presence-home"].trigger('worker_connection_timeout_event', chat_id: id)
   end
   handle_asynchronously :check_connection_timeout, run_at: Proc.new { 1.minute.from_now }
 
