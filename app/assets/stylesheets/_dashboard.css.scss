@@ -1,6 +1,4 @@
 .dashboard {
-
-  $border_color: #eaeaea;
   $full_padding: 12px;
 
   clear: both;
@@ -13,22 +11,21 @@
 
   .msg {
     position: relative;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $brand-lightGrey;
     padding: $full_padding 90px 6px $full_padding;
   }
 
   .first_message {
     font-size: 21px;
     line-height: 35px;
-    text-shadow: 0px 1px 1px #c5c3c3;
   }
 
   .last_sentence blockquote:last-child {
-    border-left: 5px solid rgb(120, 189, 228);
+    border-left: 5px solid $brand-lightBlue;
   }
 
   .msg:first-child {
-    border-top: 1px solid $border_color;
+    border-top: 1px solid $brand-lightGrey;
   }
 
   .pickup {

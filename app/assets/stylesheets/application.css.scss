@@ -1,13 +1,4 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
  *= require_self
  *= require bootstrap_and_overrides
  *= require chats
@@ -17,9 +8,14 @@
  *= require_tree ./responsive
  */
 
+@import 'colors';
 @import 'dashboard';
+@import 'emoji_sprite';
 @import 'timer';
-@import 'emoji';
+
+abbr.timeago {
+  color: $brand-textGrey;
+}
 
 .center {
   text-align: center;
@@ -30,7 +26,7 @@
 }
 
 footer {
-  margin-top: 50px;
+  margin-top: 32px;
 
   p {
     color: #ddd;
@@ -61,8 +57,4 @@ footer {
 .initial_question_input {
   width: 100%;
   resize: none;
-}
-
-footer {
-  margin-top: 32px;
 }
