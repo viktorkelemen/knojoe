@@ -8,6 +8,8 @@ class Message < ActiveRecord::Base
   # validates :author, presence: true
   validate :chat_finished
 
+  scope :recent, -> { reorder('messages.created_at DESC') }
+
   def chat_finished
     errors.add(:base, 'chat is finished') if chat.try(:finished?)
   end

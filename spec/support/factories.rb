@@ -13,7 +13,13 @@ FactoryGirl.define do
   end
 
   factory :message do
-    content 'a message'
+    sequence(:content) {|n| "a user message #{n}" }
+    status 'user'
   end
 
+  factory :system_message, class: Message do
+    author nil
+    status 'system'
+    sequence(:content) {|n| "a system message #{n}" }
+  end
 end

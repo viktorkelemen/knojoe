@@ -57,6 +57,22 @@ class Chat < ActiveRecord::Base
     save!
   end
 
+  def last_sentence_from_each_side
+    requester_message, responder_message = nil, nil
+
+    messages.where(status: 'user').recent.each do |message|
+      case message.author_id
+      when requester_id
+        requester_message ||= message.content
+      when responder_id
+        responder_message ||= message.content
+      end
+      break if requester_message && responder_message
+    end
+
+    [requester_message, responder_message]
+  end
+
   private
 
   def check_connection_timeout
