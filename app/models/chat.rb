@@ -57,20 +57,14 @@ class Chat < ActiveRecord::Base
     save!
   end
 
-  def last_sentence_from_each_side
-    requester_message, responder_message = nil, nil
+  def last_message_from_requester
+    recent_messages = messages.user_messages.where(author_id: requester_id).recent
+    #the first message is the question we should not include that
+    recent_messages.first.try(:content) unless recent_messages.length == 1
+  end
 
-    messages.where(status: 'user').recent.each do |message|
-      case message.author_id
-      when requester_id
-        requester_message ||= message.content
-      when responder_id
-        responder_message ||= message.content
-      end
-      break if requester_message && responder_message
-    end
-
-    [requester_message, responder_message]
+  def last_message_from_responder
+    messages.user_messages.where(author_id: responder_id).recent.first.try(:content)
   end
 
   private

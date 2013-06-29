@@ -9,6 +9,7 @@ class Message < ActiveRecord::Base
   validate :chat_finished
 
   scope :recent, -> { reorder('messages.created_at DESC') }
+  scope :user_messages, -> { where(status: 'user') }
 
   def chat_finished
     errors.add(:base, 'chat is finished') if chat.try(:finished?)
