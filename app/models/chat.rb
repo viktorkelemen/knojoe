@@ -12,7 +12,7 @@ class Chat < ActiveRecord::Base
 
   scope :recent, ->(limit = 5) { order('created_at DESC').limit(limit) }
 
-  after_create :check_connection_timeout
+  after_create :check_chat_timeout
 
   def started_offset(default = -1)
     if started_at
@@ -53,12 +53,12 @@ class Chat < ActiveRecord::Base
     save!
   end
 
-  def check_connection_timeout
+  def check_chat_timeout
     # do not close it if there is a responder
     return if finished? || responder
     finish
   end
-  handle_asynchronously :check_connection_timeout, run_at: Proc.new { 3.minutes.from_now }
+  handle_asynchronously :check_chat_timeout, run_at: Proc.new { 3.minutes.from_now }
 
   def self.num_of_active_chats
     where(started_at: nil, finished_at: nil).count
