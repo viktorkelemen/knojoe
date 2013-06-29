@@ -63,7 +63,9 @@
 
       if (data.type == 'timeout') {
         $('.chat_status').removeClass('waiting');
-      }
+      } else if (data.type === 'finish') {
+        confirmLeavingOnGoingChat = false;
+      };
     }
 
     // FIX: this should not be here
@@ -121,6 +123,8 @@
           console.error(error);
         }
       });
+
+      confirmLeavingOnGoingChat = false;
     }
   });
 

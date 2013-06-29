@@ -26,7 +26,8 @@
       removeTypingIndicator();
 
       if (data.type === 'finish') {
-        $('#message_content, .send_btn').attr('disabled','disabled')
+        $('#message_content, .send_btn').attr('disabled', 'disabled');
+        confirmLeavingOnGoingChat = false;
       }
     }
   });

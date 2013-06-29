@@ -6,5 +6,12 @@
 
 :javascript
   jQuery(function($) {
-    $('#messages').scrollTop($('#messages').prop("scrollHeight"));
+    $('#messages').scrollTop($('#messages').prop('scrollHeight'));
+
+    window.confirmLeavingOnGoingChat = true;
+    onbeforeunload = function() {
+      if (confirmLeavingOnGoingChat) {
+        return 'You are about to leave an unfinished conversation.';
+      };
+    };
   });
