@@ -33,14 +33,14 @@ class SessionsController < ApplicationController
         # The identity we found had a user associated with it so let's
         # just log them in here
         self.current_user = @identity.user
-        redirect_to return_path, notice: 'Signed in!'
+        redirect_to return_path
       else
         # No user associated with the identity so we need to create a new one
         # redirect_to new_user_url, notice: 'Please finish registering'
         self.current_user = User.create_with_omniauth(auth['info'])
         @identity.user = current_user
         @identity.save
-        redirect_to return_path, notice: 'Signed in!'
+        redirect_to return_path
       end
     end
   end
