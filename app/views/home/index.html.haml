@@ -4,11 +4,14 @@
 - if current_user
   .intro_msg
     - if current_user.helped_questions.size > 0
-      You helped
-      %b #{ current_user.helped_questions.size }
-      fellow knojoers and your answers received
-      %b #{ current_user.received_likes_count }
-      likes.
+      %p<
+        You helped
+        %b #{ current_user.helped_questions.size }
+        fellow knojoers and your answers received
+        %b #{ current_user.received_likes_count }
+        likes.
+    Ask a question or pick up one from the list.
+
   .clearfix
     = link_to 'Ask a question', ask_path, class: 'btn btn-primary ask_btn'
   - if @recent_chats.size > 0
