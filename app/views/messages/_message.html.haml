@@ -9,7 +9,7 @@
     %p= parse_emoji(message.content)
     %abbr.time{ data: { utime: message.created_at } }
       = message.created_at.strftime("%H:%M")
-    - if mode == 'review'
+    - if mode == 'review' && current_user == @chat.requester && current_user != message.author
       = link_to 'Like', like_message_path(message), class: 'like_button like_status_css', method: :post, remote: true
       = link_to 'Unlike', unlike_message_path(message), class: 'unlike_button', method: :delete, remote: true
 - else
