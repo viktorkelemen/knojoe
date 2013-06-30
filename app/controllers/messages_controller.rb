@@ -18,6 +18,7 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
     @like = Like.new(message: @message, user: current_user)
     if @like.save
+      log_event('Message', 'message liked', "message_id: #{@message.id}, content: #{@message.content}")
       render json: { message_id: @message.id }
     else
       render json: { error: @like.errors.full_message }
