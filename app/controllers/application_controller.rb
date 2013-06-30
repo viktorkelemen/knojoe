@@ -26,6 +26,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Google Analytics event logging
+  def log_event(category, action, label = nil, value = nil)
+    session[:events] ||= Array.new
+    session[:events] << { :category => category, :action => action, :label => label, :value => value }
+  end
+
   private
 
   def set_timezone
