@@ -170,4 +170,23 @@ describe ChatsController do
       expect(response).to be_bad_request
     end
   end
+
+  describe '#email', :focus do
+    let(:user) { login }
+    let(:chat) { create(:chat) }
+
+    it 'sends to email address fetched from user record if given email is masked' do
+      ChatMailer.should_receive(:send_conversation).with(chat, user, user.email)
+        .and_return(double.as_null_object)
+
+      post :email, id: chat.id, review: { email: user.masked_email }
+    end
+
+    it 'sends to given email address if it is not a masked one' do
+      ChatMailer.should_receive(:send_conversation).with(chat, user, 'foo@bar.com')
+        .and_return(double.as_null_object)
+
+      post :email, id: chat.id, review: { email: 'foo@bar.com' }
+    end
+  end
 end

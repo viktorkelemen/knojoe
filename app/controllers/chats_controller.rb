@@ -111,7 +111,12 @@ class ChatsController < ApplicationController
   end
 
   def email
-    ChatMailer.send_conversation(@chat, current_user, params[:email]).deliver
+    if params[:review][:email] == current_user.masked_email
+      email = current_user.email
+    else
+      email = params[:review][:email]
+    end
+    ChatMailer.send_conversation(@chat, current_user, email).deliver
     redirect_to review_chat_path(@chat), notice: 'Sent!'
   end
 
