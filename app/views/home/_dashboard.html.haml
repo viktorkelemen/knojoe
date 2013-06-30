@@ -18,7 +18,7 @@
 
   function chatStartOrPickupHandler(data) {
 
-    var entry, url;
+    var entry, url, link;
 
     if (data) {
 
@@ -27,25 +27,23 @@
         $(document).trigger('ui-num-of-active-chat', data.active);
       }
 
-      entry = $('<div>').attr('data-chat-id', data.chat_id).addClass('msg');
-
-      $('<time>').text(data.timestamp).appendTo(entry);
-      $('<p>').text(data.message).appendTo(entry);
       switch (data.type) {
         case 'new':
-          url = data.chat_path + '?socket_id=' + pusher.connection.socket_id;
-          var pickupBtn = $('<a>').attr('href', url).addClass('btn pickup btn-success').text('Pick up')
+          entry = $(data.html);
+          entry.find('.timeago').timeago();
+
+          link = entry.find('.pickup');
+          url = link.attr('href') + '?socket_id=' + pusher.connection.socket_id;
+          link.attr('href', url);
+
           if (data.requester_id == #{current_user.id}) {
             // append the pickup button but set as disabled
-            pickupBtn.attr('disabled', 'disabled').appendTo(entry);
+            link.attr('disabled', 'disabled');
           } else {
-            // do not send push notification for user's own question
-            pickupBtn.appendTo(entry);
             $(document).trigger('ui-new-question', { msg: data.message, url: url });
           }
 
           $('.dashboard .msgboard').prepend(entry);
-
           break;
         // notify other members in presence channel that someone else picked up a chat
         case 'pickedup':

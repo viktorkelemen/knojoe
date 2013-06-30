@@ -11,7 +11,16 @@ class ChatsController < ApplicationController
     @chat.messages.first.author = current_user unless @chat.messages.empty?
 
     if @chat.save
-      Pusher["presence-home"].trigger('chat_start_event', pusher_data, params[:socket_id])
+      Pusher["presence-home"].trigger('chat_start_event', {
+        chat_id: @chat.id,
+        requester_id: @chat.requester.id,
+        chat_path: responder_chat_path(@chat),
+        message: @chat.first_message.try(:content),
+        html: render_to_string(partial: '/home/dashboard_message', locals: { chat: @chat }),
+        timestamp: @chat.created_at.strftime("%H:%M"),
+        type: 'new',
+        active: Chat.num_of_active_chats
+      }, params[:socket_id])
       @chat.messages.create(status: 'system', content: 'Waiting for the responder.')
 
       log_event('Chat', 'chat created', "chat id #{@chat.id}")

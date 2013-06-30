@@ -7,5 +7,3 @@
   = timeago(chat.created_at)
   - unless chat.started? || chat.finished?
     = link_to 'Pickup', responder_chat_path(chat), class: 'btn pickup btn-success'
-
-
