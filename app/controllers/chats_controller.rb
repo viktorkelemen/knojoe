@@ -13,6 +13,9 @@ class ChatsController < ApplicationController
     if @chat.save
       Pusher["presence-home"].trigger('chat_start_event', pusher_data, params[:socket_id])
       @chat.messages.create(status: 'system', content: 'Waiting for the responder.')
+
+      log_event('Chat', 'chat created', "chat id #{@chat.id}")
+
       redirect_to requester_chat_path(@chat)
     else
       redirect_to ask_path, alert: 'Please input your question.'
@@ -49,6 +52,7 @@ class ChatsController < ApplicationController
         type: 'pickedup'
       }, params[:socket_id])
 
+      log_event('Chat', 'chat started', "chat id #{@chat.id}")
     end
 
     if @chat.finished?
@@ -75,6 +79,8 @@ class ChatsController < ApplicationController
       type: 'timeout'
     })
 
+    log_event('Chat', 'connection timeout', "chat id #{@chat.id}")
+
     head :ok
   end
 
@@ -90,6 +96,8 @@ class ChatsController < ApplicationController
       type: 'timeout'
     })
 
+    log_event('Chat', 'chat timeout', "chat id #{@chat.id}")
+
     head :ok
   end
 
@@ -101,6 +109,9 @@ class ChatsController < ApplicationController
       html: render_to_string(partial: '/messages/message', locals: { message: message, check_role: false }),
       type: 'finish'
     })
+
+    log_event('Chat', 'finished', "chat id #{@chat.id}")
+
     head :ok
   end
 
@@ -117,6 +128,9 @@ class ChatsController < ApplicationController
       email = params[:review][:email]
     end
     ChatMailer.send_conversation(@chat, current_user, email).deliver
+
+    log_event('Chat', 'email sent', "chat id #{@chat.id}")
+
     redirect_to review_chat_path(@chat), notice: 'Sent!'
   end
 
