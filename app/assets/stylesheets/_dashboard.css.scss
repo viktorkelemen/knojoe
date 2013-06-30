@@ -32,6 +32,18 @@
     right: $full_padding;
     top: 15px;
   }
+
+  .status_container {
+    font-size: 13px;
+    color: #bbbbbb;
+  }
+
+  .timeago {
+    border-bottom: none;
+    cursor: default;
+    font-weight: normal;
+    border: none;
+  }
 }
 
 @media (max-width: 340px) {
