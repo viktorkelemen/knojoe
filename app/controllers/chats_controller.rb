@@ -154,15 +154,4 @@ class ChatsController < ApplicationController
     @chat = Chat.includes(messages: [:author]).find(params[:id])
   end
 
-  def pusher_data
-    {
-      chat_id:      @chat.id,
-      requester_id: @chat.requester.id,
-      chat_path:    responder_chat_path(@chat),
-      message:      @chat.first_message.try(:content),
-      timestamp:    @chat.created_at.strftime("%H:%M"),
-      type:         'new',
-      active:       Chat.num_of_active_chats
-    }
-  end
 end
