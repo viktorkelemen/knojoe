@@ -22,4 +22,11 @@ class User < ActiveRecord::Base
   def available_for_push_notification?
     helped_questions.on_today.count <= DAILY_PUSH_NOTIFICATION_LIMIT
   end
+
+  def masked_email
+    masked = email.dup
+    masked[/(...)@/] = '***@'
+
+    masked
+  end
 end
