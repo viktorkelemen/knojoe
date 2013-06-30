@@ -1,8 +1,11 @@
 .msg{data: { chat_id: chat.id} }
-  .first_message= simple_format chat.first_message.try(:content)
-  .last_sentence
-    %blockquote= chat.last_message_from_requester
-    %blockquote= chat.last_message_from_responder
+  = simple_format chat.first_message.try(:content), class: 'first_message'
+  - if chat.messages.size > 1
+    .last_sentence
+      - if chat.last_message_from_requester
+        %blockquote= chat.last_message_from_requester
+      - if chat.last_message_from_responder
+        %blockquote= chat.last_message_from_responder
 
   = timeago(chat.created_at)
   - unless chat.started? || chat.finished?
