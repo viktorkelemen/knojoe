@@ -12,15 +12,7 @@
   %h3 Latest questions
   .msgboard
     - @recent_chats.each do |chat|
-      .msg{data: { chat_id: chat.id} }
-        .first_message= simple_format chat.first_message.try(:content)
-        .last_sentence
-          %blockquote= chat.last_message_from_requester
-          %blockquote= chat.last_message_from_responder
-
-        = timeago(chat.created_at)
-        - unless chat.started? || chat.finished?
-          = link_to 'Pickup', responder_chat_path(chat), class: 'btn pickup btn-success'
+      = render 'dashboard_message', chat: chat
 
 :javascript
 
