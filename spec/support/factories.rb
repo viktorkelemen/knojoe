@@ -3,6 +3,9 @@
 FactoryGirl.define do
   factory :user, aliases: [:requester, :responder] do
     name 'knojoe'
+    sequence :email do |n|
+      "person#{n}@example.com"
+    end
   end
 
   factory :chat do
