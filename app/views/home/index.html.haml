@@ -19,7 +19,7 @@
         input_html: { placeholder: "What's your question?", class: 'initial_question_input', rows: 5 },
         label: false,
         required: true
-    = f.button :submit, 'Knojoe it', class: 'btn-primary ask_btn'
+    = f.button :submit, 'Ask Anonymously', class: 'btn-primary ask_btn'
 
   - if @recent_chats.size > 0
     = render 'dashboard'
