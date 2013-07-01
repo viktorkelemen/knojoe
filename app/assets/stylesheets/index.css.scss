@@ -1,7 +1,18 @@
-.notification_setup_container {
-  margin-top: 34px;
-  padding-left: 12px;
-  input {
-    margin-top: 0;
+.home_controller {
+  .notification_setup_container {
+    margin-top: 34px;
+    padding-left: 12px;
+    input {
+      margin-top: 0;
+    }
+  }
+
+  .initial_question_input {
+    margin-top: 15px;
+    width: 100%;
+    resize: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
   }
 }

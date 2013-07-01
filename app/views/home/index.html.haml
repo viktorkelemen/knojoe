@@ -12,8 +12,15 @@
         likes.
     Ask a question or pick up one from the list.
 
-  .clearfix
-    = link_to 'Ask a question', ask_path, class: 'btn btn-primary ask_btn'
+  = simple_form_for @chat do |f|
+    = hidden_field_tag(:socket_id)
+    = f.simple_fields_for :messages do |message_form|
+      = message_form.input :content, as: :text,
+        input_html: { placeholder: "What's your question?", class: 'initial_question_input', rows: 5 },
+        label: false,
+        required: true
+    = f.button :submit, 'Knojoe it', class: 'btn-primary ask_btn'
+
   - if @recent_chats.size > 0
     = render 'dashboard'
 

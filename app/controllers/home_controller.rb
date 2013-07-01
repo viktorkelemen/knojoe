@@ -1,9 +1,6 @@
 class HomeController < ApplicationController
   def index
     @recent_chats = Chat.recent
-  end
-
-  def ask
     @chat = Chat.new
     @chat.messages.new
   end
