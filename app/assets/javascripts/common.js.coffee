@@ -4,8 +4,8 @@ updateTitleCounter = (count) ->
   title = "(#{ count }) Knojoe" if count > 0
   document.title = title
 
-sendNotification = (msg) ->
-  notification = window.webkitNotifications.createNotification('', 'Need your help', msg)
+sendNotification = (data) ->
+  notification = window.webkitNotifications.createNotification('', 'Need your help', data.msg)
   notification.onclick = ->
     window.location = data.url
 
@@ -21,7 +21,7 @@ $(document).on('ui-new-question', (event, data) ->
     soundNotification[0].play()
   if window.localStorage && window.localStorage.getItem(storageKey) is 'on' &&
   window.webkitNotifications && window.webkitNotifications.checkPermission() == 0
-    sendNotification(data.msg)
+    sendNotification(data)
 )
 
 $ ->
