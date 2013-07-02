@@ -10,7 +10,7 @@
         fellow knojoers and your answers received
         %b #{ current_user.received_likes_count }
         likes.
-    Ask a question or pick up an active one from the list.
+  %h3 Ask
 
   = simple_form_for @chat do |f|
     = hidden_field_tag(:socket_id)

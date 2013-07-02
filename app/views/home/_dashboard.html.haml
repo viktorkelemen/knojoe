@@ -9,7 +9,7 @@
     %strong#available_member_count ...
 
 .dashboard
-  %h3 Latest questions
+  %h3 Help to answer
   .msgboard
     - @recent_chats.each do |chat|
       = render 'dashboard_message', chat: chat
