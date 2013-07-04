@@ -18,7 +18,7 @@
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          = link_to root_url(subdomain: false), class: 'brand' do
+          = link_to root_url, class: 'brand' do
             = image_tag 'knojoe_logo_09.png', alt: 'Knojoe', class: 'logo'
           .container
             - if signed_in?
