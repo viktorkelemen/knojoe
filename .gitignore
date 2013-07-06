@@ -21,3 +21,4 @@ server*
 
 # Ignore local gitconfig
 .gitconfig
+.sass-cache
