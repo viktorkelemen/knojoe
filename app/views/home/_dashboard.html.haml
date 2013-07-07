@@ -63,7 +63,10 @@
 
   var updateOnlineMemberCount = function() {
     var memberCount = presenceChannel.members.count;
-    $('#available_member_count').text(presenceChannel.members.count);
+    if (memberCount !== undefined) {
+      // don't count itself
+      $('#available_member_count').text(memberCount - 1);
+    }
   }
 
   var workerConnectionTimeoutHandler = function(data) {
