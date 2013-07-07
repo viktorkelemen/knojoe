@@ -26,9 +26,9 @@
         required: true
 
     .form_footer
-      -#%p#online_info<
-        -#Currently available member(s):
-        -#%strong#available_member_count ...
+      %label
+        = check_box_tag '', '', true, disabled: true
+        Anonymously
       = f.button :submit, 'Start', class: 'btn-primary'
 
   - if @recent_chats.size > 0

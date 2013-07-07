@@ -28,6 +28,16 @@
 
     .form_footer {
       display: none;
+
+      input[type=checkbox] {
+        margin-top: -2px;
+      }
+
+      label {
+        margin-top: 4px;
+        display: block;
+        float: left;
+      }
     }
 
     .initial_question_input {
