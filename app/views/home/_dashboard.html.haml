@@ -3,13 +3,10 @@
   = "(%s)" % num if num > 0
   Knojoe
 
-= content_for :footer do
-  %p#online_info<
-    Currently available member(s):
-    %strong#available_member_count ...
-
 .dashboard
-  %h3 Help to answer
+  %h4
+    %strong Help
+    a Knojoer by picking a conversation from below!
   .msgboard
     - @recent_chats.each do |chat|
       = render 'dashboard_message', chat: chat

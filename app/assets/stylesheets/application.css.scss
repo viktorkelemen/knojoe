@@ -3,7 +3,6 @@
  *= require bootstrap_and_overrides
  *= require chats
  *= require users
- *= require index
  *= require index_static
  *= require home
  *= require_tree ./responsive
@@ -11,6 +10,7 @@
 
 @import 'colors';
 @import 'dashboard';
+@import 'index';
 @import 'emoji_sprite';
 @import 'timer';
 
@@ -36,21 +36,9 @@ footer {
   }
 }
 
-#online_info {
-  color: #333;
-  font-size: 1.1em;
-}
-
-#available_member_count {
-  font-size: 1.2em;
-  color: #65a830;
-}
 
 .container_narrow {
   max-width: 700px;
   margin: 0 auto;
 }
 
-.ask_btn {
-  float: right;
-}

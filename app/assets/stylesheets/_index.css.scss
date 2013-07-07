@@ -1,0 +1,80 @@
+.home_controller {
+  .notification_setup_container {
+    margin-top: 34px;
+    padding-left: 12px;
+    input {
+      margin-top: 0;
+    }
+  }
+
+  #new_chat {
+    position: relative;
+    border: 1px solid $brand-darkGrey;
+    margin-bottom: 30px;
+
+    i.arrow {
+      background-image: url(/assets/facebook_sprite.png);
+      background-repeat: no-repeat;
+      background-size: auto;
+      background-position: 0 -49px;
+      display: block;
+      height: 6px;
+      left: 10px;
+      position: absolute;
+      top: -6px;
+      width: 9px;
+    }
+
+
+    .form_footer {
+      display: none;
+    }
+
+    .initial_question_input {
+      margin-top: 5px;
+      margin-bottom: 0;
+      width: 100%;
+      height: 30px;
+      resize: none;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    &.open {
+      .initial_question_input {
+        min-height: 100px;
+      }
+
+      .form_footer {
+        background: $brand-lightGrey;
+        border-top: 1px solid $brand-textGrey;
+        text-align: right;
+        display: block;
+        padding: 5px;
+      }
+    }
+  }
+
+
+  h4 {
+    font-weight: normal;
+  }
+
+  #online_info {
+    display: inline-block;
+  }
+
+  #available_member_count {
+    color: #65a830;
+  }
+
+  .form_footer {
+    display: block;
+  }
+
+}

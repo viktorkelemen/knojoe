@@ -27,8 +27,14 @@
 
     document.cookie = "time_zone=#{ jstz.determine().name() };";
 
+    form = $('#new_chat')
+    questionInput = form.find(".initial_question_input")
+
+    questionInput.on 'focus', (event) ->
+      form.addClass('open')
+
     #Adding the socket_id to the form when a new chat created
-    $("#new_chat").submit (event) ->
+    form.submit (event) ->
       if pusher?.connection?.socket_id?
         $(this).find('#socket_id').val(pusher.connection.socket_id)
   )

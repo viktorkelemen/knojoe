@@ -2,24 +2,34 @@
   = javascript_include_tag 'index'
 
 - if current_user
-  .intro_msg
-    - if current_user.helped_questions.size > 0
-      %p<
-        You helped
-        %b #{ current_user.helped_questions.size }
-        fellow knojoers and your answers received
-        %b #{ current_user.received_likes_count }
-        likes.
-  %h3 Ask
+  -#.intro_msg
+    -#- if current_user.helped_questions.size > 0
+      -#%p<
+        -#You helped
+        -#%b #{ current_user.helped_questions.size }
+        -#fellow knojoers and your answers received
+        -#%b #{ current_user.received_likes_count }
+        -#likes.
+  %h4
+    %strong Start
+    a 3 min conversation with a fellow Knojoer,
+    %span#available_member_count
+    online
 
-  = simple_form_for @chat do |f|
+  = simple_form_for @chat, html: { class: 'clearfix new_chat' } do |f|
+    %i.arrow
     = hidden_field_tag(:socket_id)
     = f.simple_fields_for :messages do |message_form|
       = message_form.input :content, as: :text,
-        input_html: { placeholder: "What's your question?", class: 'initial_question_input', rows: 5 },
+        input_html: { placeholder: "Ask something...", class: 'initial_question_input', rows: 5 },
         label: false,
         required: true
-    = f.button :submit, 'Ask Anonymously', class: 'btn-primary ask_btn'
+
+    .form_footer
+      -#%p#online_info<
+        -#Currently available member(s):
+        -#%strong#available_member_count ...
+      = f.button :submit, 'Start', class: 'btn-primary'
 
   - if @recent_chats.size > 0
     = render 'dashboard'
