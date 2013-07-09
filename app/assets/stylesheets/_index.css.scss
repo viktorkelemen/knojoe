@@ -7,10 +7,14 @@
     }
   }
 
+  #new_chat_container {
+    margin-bottom: 30px;
+  }
+
   #new_chat {
     position: relative;
     border: 1px solid $brand-darkGrey;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 
     i.arrow {
       background-image: url(/assets/facebook_sprite.png);

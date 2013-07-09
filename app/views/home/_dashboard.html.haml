@@ -6,7 +6,7 @@
 .dashboard
   %h4
     %strong Help
-    a Knojoer by picking a conversation from below!
+    by picking up a conversation!
   .msgboard
     - @recent_chats.each do |chat|
       = render 'dashboard_message', chat: chat

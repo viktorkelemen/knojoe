@@ -11,25 +11,31 @@
         -#%b #{ current_user.received_likes_count }
         -#likes.
   %h4
-    %strong Start
-    a 3 min conversation with one of
+    %strong Request
+    a 3 min conversation!
+    -#with one of
+    -#%span#available_member_count ...
+    -#online fellow Knojoer(s).
+
+  #new_chat_container
+    = simple_form_for @chat, html: { class: 'clearfix new_chat' } do |f|
+      %i.arrow
+      = hidden_field_tag(:socket_id)
+      = f.simple_fields_for :messages do |message_form|
+        = message_form.input :content, as: :text,
+          input_html: { placeholder: "Ask something...", class: 'initial_question_input', rows: 5 },
+          label: false,
+          required: true
+
+      .form_footer
+        %label
+          = check_box_tag '', '', true, disabled: true
+          Anonymously
+        = f.button :submit, 'Start', class: 'btn-primary'
+
     %span#available_member_count ...
-    online fellow Knojoer(s).
+    fellow Knojoer(s) are online.
 
-  = simple_form_for @chat, html: { class: 'clearfix new_chat' } do |f|
-    %i.arrow
-    = hidden_field_tag(:socket_id)
-    = f.simple_fields_for :messages do |message_form|
-      = message_form.input :content, as: :text,
-        input_html: { placeholder: "Ask something...", class: 'initial_question_input', rows: 5 },
-        label: false,
-        required: true
-
-    .form_footer
-      %label
-        = check_box_tag '', '', true, disabled: true
-        Anonymously
-      = f.button :submit, 'Start', class: 'btn-primary'
 
   - if @recent_chats.size > 0
     = render 'dashboard'
