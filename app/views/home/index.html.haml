@@ -20,20 +20,9 @@
       check('initial-alert');
       check('no-user-alert');
     }())
-  -#.intro_msg
-    -#- if current_user.helped_questions.size > 0
-      -#%p<
-        -#You helped
-        -#%b #{ current_user.helped_questions.size }
-        -#fellow knojoers and your answers received
-        -#%b #{ current_user.received_likes_count }
-        -#likes.
   %h4
     %strong Request
     a 3 min conversation!
-    -#with one of
-    -#%span#available_member_count ...
-    -#online fellow Knojoer(s).
 
   #new_chat_container
     = simple_form_for @chat, html: { class: 'clearfix new_chat' } do |f|
