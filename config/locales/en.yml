@@ -4,6 +4,7 @@
 en:
   chats:
     responder_exists: "Oops, someone already picked up that question."
+    chat_finished: 'Conversation finished'
 
   chat_mailer:
     send_conversation:
