@@ -43,6 +43,8 @@
 
       if data == 0
         $('.alert[data-type="no-user-alert"]').removeClass('hidden')
+      else
+        $('.alert[data-type="no-user-alert"]').addClass('hidden')
     )
   )
 )()
