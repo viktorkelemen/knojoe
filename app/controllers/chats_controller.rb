@@ -66,6 +66,7 @@ class ChatsController < ApplicationController
 
     if @chat.finished?
       redirect_to review_chat_path, alert: t('chats.chat_finished')
+      return
     end
 
     @chat.assign_responder(current_user)
