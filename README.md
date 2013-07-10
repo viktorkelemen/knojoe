@@ -1,3 +1,5 @@
+Knojoe is about...
+
 "Happiness through helping Anytime, Anywhere."
  
 What this means is that we are committed to:
