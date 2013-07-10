@@ -65,7 +65,7 @@
     var memberCount = presenceChannel.members.count;
     if (memberCount !== undefined) {
       // don't count itself
-      $('#available_member_count').text(memberCount - 1);
+      $(document).trigger('ui-member-count', memberCount - 1);
     }
   }
 

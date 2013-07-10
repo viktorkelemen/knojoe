@@ -2,6 +2,24 @@
   = javascript_include_tag 'index'
 
 - if current_user
+  .alert.alert-info{ data: { type: 'initial-alert' } }
+    Hello, please keep this window open at anytime in order to receive desktop notifications.
+    %button.close ×
+  .alert.alert-block.hidden{ data: { type: 'no-user-alert' } }
+      Currently there is no one else on Knojoe. Keep this window open and wait until someone joins.
+    %button.close ×
+  :javascript
+    (function () {
+      function check(dataType) {
+        var alert = $('.alert[data-type="' + dataType + '"]');
+        var key = alert.data('type');
+        if ((window.localStorage) && (window.localStorage.getItem('knojoe:' + key))) {
+          alert.remove();
+        }
+      }
+      check('initial-alert');
+      check('no-user-alert');
+    }())
   -#.intro_msg
     -#- if current_user.helped_questions.size > 0
       -#%p<

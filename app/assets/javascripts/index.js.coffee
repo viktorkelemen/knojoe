@@ -37,5 +37,12 @@
     form.submit (event) ->
       if pusher?.connection?.socket_id?
         $(this).find('#socket_id').val(pusher.connection.socket_id)
+
+    $(document).on('ui-member-count', (event, data) ->
+      $('#available_member_count').text(data);
+
+      if data == 0
+        $('.alert[data-type="no-user-alert"]').removeClass('hidden')
+    )
   )
 )()

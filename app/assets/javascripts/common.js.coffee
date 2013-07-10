@@ -30,3 +30,13 @@ $ ->
   $("body").on("click", "a[disabled]", (event) ->
     event.preventDefault()
   )
+
+  $("body").on("click",".alert .close", (event) ->
+    event.preventDefault()
+    event.stopPropagation()
+    alert = $(this).parent('.alert')
+    alert.remove()
+    if window.localStorage
+      key = alert.data('type')
+      window.localStorage.setItem('knojoe:' + key,1) unless window.localStorage.getItem(key)
+  )
