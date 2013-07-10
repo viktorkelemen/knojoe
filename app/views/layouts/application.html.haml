@@ -48,6 +48,7 @@
       %footer
         - if content_for?(:footer)
           = content_for(:footer)
+        = link_to 'Give us Feedback', 'http://knojoe.uservoice.com', class: 'feedback_link', target: '_blank'
         %p &copy; Knojoe 2012
     = render 'layouts/google_analytics'
     = render 'layouts/ga_events'
