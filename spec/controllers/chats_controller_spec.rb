@@ -171,7 +171,7 @@ describe ChatsController do
     end
   end
 
-  describe '#email', :focus do
+  describe '#email' do
     let(:user) { login }
     let(:chat) { create(:chat) }
 
@@ -187,6 +187,38 @@ describe ChatsController do
         .and_return(double.as_null_object)
 
       post :email, id: chat.id, review: { email: 'foo@bar.com' }
+    end
+  end
+
+  describe '#review' do
+    it 'responds success if chat is finished and current user participated in that chat' do
+      user = login
+      chat = stub_model(Chat, requester: user)
+      Chat.stub_chain(:includes, :find).and_return(chat)
+      chat.should_receive(:finished?).and_return(true)
+
+      get :review, id: chat
+      expect(response).to be_success
+    end
+
+    it 'redirects to root if chat is not finished' do
+      user = login
+      chat = stub_model(Chat, requester: user)
+      Chat.stub_chain(:includes, :find).and_return(chat)
+      chat.should_receive(:finished?).and_return(false)
+
+      get :review, id: chat
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'redirects to root if current user is not participated in that chat' do
+      user = login
+      chat = stub_model(Chat)
+      Chat.stub_chain(:includes, :find).and_return(chat)
+      chat.should_receive(:finished?).and_return(true)
+
+      get :review, id: chat
+      expect(response).to redirect_to(root_path)
     end
   end
 end

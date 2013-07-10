@@ -125,8 +125,7 @@ class ChatsController < ApplicationController
   end
 
   def review
-    raise 'error' unless @chat.finished?
-    raise 'error' unless @chat.requester == current_user || @chat.responder == current_user
+    return redirect_to root_path unless @chat.finished? && current_user.participated?(@chat)
     @messages = @chat.messages
   end
 

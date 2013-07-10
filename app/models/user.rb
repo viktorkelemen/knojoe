@@ -29,4 +29,8 @@ class User < ActiveRecord::Base
 
     masked
   end
+
+  def participated?(chat)
+    chat.requester_id == id || chat.responder_id == id
+  end
 end
